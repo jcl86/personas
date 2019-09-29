@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace Personas.Data
 {
-    public class Provincias
+    public class Provincias : DatabaseEntity
     {
-        public int Id { get; set; }
         public string NombreProvincia { get; set; }
-        public int IdRegion { get; set; }
         public string GentilicioM { get; set; }
         public string GentilicioF { get; set; }
+
+        public int IdRegion { get; set; }
+        public virtual Regiones Regiones { get; set; }
+
+        public virtual ICollection<Localidades> Localidades { get; set; }
+
+        public Provincias()
+        {
+            Localidades = new HashSet<Localidades>();
+        }
+
     }
 }

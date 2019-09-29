@@ -6,16 +6,31 @@ using System.Threading.Tasks;
 
 namespace Personas.Data
 {
-    public class Regiones
+    public class Regiones : DatabaseEntity
     {
-        public int Id { get; set; }
         public string NombreRegion { get; set; }
-        public int IdPais { get; set; }
-        public int? Habitantes { get; set; }
-        public int IdIdiomaOficial { get; set; }
-        public int? IdIdiomaCooficial { get; set; }
+        public int Habitantes { get; set; }
+        public int Densidad { get; set; }
+
         public int? PorcentajeIdiomaOficial { get; set; }
+
         public string GentilicioM { get; set; }
         public string GentilicioF { get; set; }
+
+        public int IdIdiomaOficial { get; set; }
+        public virtual Idiomas IdiomaOficial { get; set; }
+
+        public int? IdIdiomaCooficial { get; set; }
+        public virtual Idiomas IdiomaCooficial { get; set; }
+
+        public int IdPais { get; set; }
+        public virtual Paises Pais { get; set; }
+
+        public virtual ICollection<Provincias> Provincias { get; set; }
+
+        public Regiones()
+        {
+            Provincias = new HashSet<Provincias>();
+        }
     }
 }

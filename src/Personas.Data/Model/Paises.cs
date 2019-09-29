@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace Personas.Data
 {
-    public class Paises
-    { 
-        public int Id { get; set; }
+    public class Paises : DatabaseEntity
+    {
         public string NombrePais { get; set; }
+
+        public virtual ICollection<Regiones> Regiones { get; set; }
+
+        public Paises()
+        {
+            Regiones = new HashSet<Regiones>();
+        }
     }
 }

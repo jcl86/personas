@@ -1,22 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Personas.Data
 {
-    public class Idiomas
+    public class Idiomas : DatabaseEntity
     {
-        public int Id { get; set; }
         public string NombreIdioma { get; set; }
 
-        public Idiomas() { }
+        public virtual ICollection<Apellidos> Apellidos { get; set; }
+        public virtual ICollection<Nombres> Nombres { get; set; }
 
-        public override string ToString() => NombreIdioma;
-        public override bool Equals(object obj)
+        public virtual ICollection<Regiones> RegionesOficial { get; set; }
+        public virtual ICollection<Regiones> RegionesCooficial { get; set; }
+
+        public Idiomas()
         {
-            if (obj == null || GetType() != obj.GetType())
-                throw new ArgumentNullException("El parametro debe ser un objeto de tipo " + this.GetType());
-            return (Id == ((Idiomas)obj).Id);
+            Apellidos = new HashSet<Apellidos>();
+            Nombres = new HashSet<Nombres>();
+            RegionesOficial = new HashSet<Regiones>();
+            RegionesCooficial = new HashSet<Regiones>();
         }
-
-        public override int GetHashCode() => Id.GetHashCode();
     }
 }

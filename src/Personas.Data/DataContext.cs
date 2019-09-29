@@ -5,7 +5,8 @@ namespace Personas.Data
 {
     public class DataContext : DbContext
     {
-        internal DbSet<Nombres> Users { get; set; }
+        internal DbSet<Nombres> Nombres { get; set; }
+        internal DbSet<Nombres> Apellidos { get; set; }
         public DataContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
