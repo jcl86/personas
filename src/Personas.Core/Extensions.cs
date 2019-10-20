@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Personas.Core
 {
-    public static class EnumExtensions
+    public static class Extensions
     {
         public static string Descripcion<T>(this T source) where T : Enum
         {
@@ -16,5 +16,8 @@ namespace Personas.Core
             if (attributes != null && attributes.Length > 0) return attributes[0].Description;
             else return source.ToString();
         }
+
+        public static bool IsEmpty(this string text) => string.IsNullOrWhiteSpace(text);
+        
     }
 }

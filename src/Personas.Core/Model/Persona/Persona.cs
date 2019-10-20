@@ -5,21 +5,12 @@ using System.Threading.Tasks;
 
 namespace Personas.Core
 {
-    public class Nombre
-    {
-        private readonly string nombre;
-
-        public Nombre(string nombre)
-        {
-            this.nombre = nombre;
-        }
-    }
     public class Persona
     {
         public string Dni { get; }
-        public string Nombre { get; }
-        public string PrimerApellido { get; }
-        public string SegundoApellido { get; }
+        public Nombre Nombre { get; }
+        public Apellido PrimerApellido { get; }
+        public Apellido SegundoApellido { get; }
 
         public Genero Sexo { get; }
         public Lugar Origen { get; }
@@ -34,11 +25,12 @@ namespace Personas.Core
             return age;
         }
         
-        public Persona(string nombre, string apellido1, string apellido2, Genero genero, Lugar origen, DateTime fechaNacimiento, IRandomProvider randomProvider)
+        public Persona(Nombre nombre, Apellido primerApellido, Apellido segundoApellido, 
+            Genero genero, Lugar origen, DateTime fechaNacimiento, IRandomProvider randomProvider)
         {
             Nombre = nombre;
-            PrimerApellido = apellido1;
-            SegundoApellido = apellido2;
+            PrimerApellido = primerApellido;
+            SegundoApellido = segundoApellido;
             Sexo = genero;
             Origen = origen;
             FechaNacimiento = fechaNacimiento;
@@ -47,7 +39,8 @@ namespace Personas.Core
         }
 
         public string Detalle() => $"{Nombre}, {Edad()} años, de {Origen.ToString()}";
-        public override string ToString() => $"{Nombre.Trim()} {PrimerApellido.Trim()} {SegundoApellido}";
+        public override string ToString() 
+            => $"{Nombre.ToString()} {PrimerApellido.ToString()} {SegundoApellido.ToString()}";
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())

@@ -14,7 +14,8 @@ namespace Personas.Data
         public int Comun { get; set; }
         public bool NombreCompuesto { get; set; }
         public int Sexo { get; set; }
+
         public int IdIdioma { get; set; }
-        public virtual Idiomas Idiomas { get; set; }
+        public virtual Idiomas Idioma { get; set; }
     }
 }

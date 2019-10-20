@@ -1,11 +1,12 @@
-﻿using Personas.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using Personas.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Personas.Data.Repositories
 {
-    public class ApellidosRepository : Repository
+    public class ApellidosRepository : Repository, IApellidosRepository
     {
         private readonly IRandomProvider randomProvider;
 
@@ -15,12 +16,14 @@ namespace Personas.Data.Repositories
             this.randomProvider = randomProvider;
         }
 
-        public IEnumerable<Apellidos> GetApellidos(int numero, Cultura cultura = Cultura.Spanish)
+        public IEnumerable<Apellido> GetApellidos(int numero, Cultura cultura = Cultura.Spanish)
         {
             if (numero < 100)
                 throw new ArgumentOutOfRangeException("La lista debe conener 100 apellidos por lo menos");
 
-            var apellidosEnCultura = context.Apellidos.Where(x => x.IdCultura == cultura);
+            var apellidosEnCultura = context.Apellidos
+                .Include(x => x.Idioma)
+                .Where(x => x.IdCultura == cultura);
 
             var list = new List<IEnumerable<Apellidos>>()
             {
@@ -38,7 +41,10 @@ namespace Personas.Data.Repositories
             {
                 for (int j = 0; j < numero * distribucion[i]; j++)
                 {
-                    yield return list[i].RandomElement(randomProvider);
+                    var item = list[i].RandomElement(randomProvider);
+                    yield return new Apellido(item.Apellido,
+                        (FrecuenciaAparicion)i,
+                        new Idioma(item.IdIdioma, item.Idioma.NombreIdioma));
                 }
             }
         }

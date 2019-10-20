@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Personas.Data.Repositories
 {
-    public class NombresRepository : Repository
+    public class NombresRepository : Repository, INombresRepository
     {
         private readonly IRandomProvider randomProvider;
 
@@ -16,12 +17,16 @@ namespace Personas.Data.Repositories
             this.randomProvider = randomProvider;
         }
 
-        public IEnumerable<Nombres> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish)
+        public IEnumerable<Nombre> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish)
         {
             if (numero < 100)
                 throw new ArgumentOutOfRangeException("La lista debe conener 100 nombres por lo menos");
 
-            var nombresEnCultura = context.Nombres.Where(x => x.IdCultura == cultura);
+            var nombresEnCultura = context
+                .Nombres
+                .Include(x => x.Idioma)
+                .Where(x => x.IdCultura == cultura);
+
             if (genero != null)
                 nombresEnCultura = nombresEnCultura.Where(x => x.Sexo == genero.IdGenero);
 
@@ -41,7 +46,10 @@ namespace Personas.Data.Repositories
             {
                 for (int j = 0; j < numero * distribucion[i]; j++)
                 {
-                    yield return list[i].RandomElement(randomProvider);
+                    var item = list[i].RandomElement(randomProvider);
+                    yield return new Nombre(item.Nombre, 
+                        item.NombreCompuesto,
+                        (FrecuenciaAparicion)i);
                 }
             }
         }
