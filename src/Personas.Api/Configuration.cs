@@ -15,9 +15,7 @@ namespace Personas.Api
                 .AddCustomMvc()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour()
-                .AddCustomServices()
-                .AddSignalR()
-                .Services;
+                .AddCustomServices();
         }
 
         public static IApplicationBuilder Configure(

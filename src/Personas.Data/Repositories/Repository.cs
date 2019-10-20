@@ -1,14 +1,16 @@
-﻿using Util.Core.Data;
+﻿using System;
 
 namespace Personas.Data.Repositories
 {
-    public class Repository
+    public class Repository : IDisposable
     {
-        protected Conexion c;
+        protected DataContext context;
 
-        public Repository(Conexion conexion)
+        public Repository(DataContext context)
         {
-            c = conexion;
+            this.context = context;
         }
+
+        public void Dispose() => context.Dispose();
     }
 }

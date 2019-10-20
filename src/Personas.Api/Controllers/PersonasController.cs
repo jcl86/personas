@@ -10,7 +10,7 @@ namespace Personas.Api.Controllers
     [Route("api/personas")]
     public class PersonasController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly NombresRepository _context;
 
         public PersonasController(DataContext context)
         {

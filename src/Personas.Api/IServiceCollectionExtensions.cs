@@ -36,27 +36,27 @@ namespace Personas.Api
         {
             return services.Configure<ApiBehaviorOptions>(options =>
             {
-                //options.SuppressModelStateInvalidFilter = false;
-                //options.SuppressInferBindingSourcesForParameters = false;
+                options.SuppressModelStateInvalidFilter = false;
+                options.SuppressInferBindingSourcesForParameters = false;
 
-                //options.InvalidModelStateResponseFactory = context =>
-                //{
-                //    var problemDetails = new ValidationProblemDetails(context.ModelState)
-                //    {
-                //        Instance = context.HttpContext.Request.Path,
-                //        Status = StatusCodes.Status400BadRequest,
-                //        Type = $"https://httpstatuses.com/400",
-                //        Detail = "Please refer to the errors property for additional details."
-                //    };
-                //    return new BadRequestObjectResult(problemDetails)
-                //    {
-                //        ContentTypes =
-                //        {
-                //            "application/problem+json",
-                //            "application/problem+xml"
-                //        }
-                //    };
-                //};
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var problemDetails = new ValidationProblemDetails(context.ModelState)
+                    {
+                        Instance = context.HttpContext.Request.Path,
+                        Status = StatusCodes.Status400BadRequest,
+                        Type = $"https://httpstatuses.com/400",
+                        Detail = "Please refer to the errors property for additional details."
+                    };
+                    return new BadRequestObjectResult(problemDetails)
+                    {
+                        ContentTypes =
+                        {
+                            "application/problem+json",
+                            "application/problem+xml"
+                        }
+                    };
+                };
             });
         }
     }

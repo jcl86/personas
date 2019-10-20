@@ -4,10 +4,12 @@ namespace Personas.Core
 {
     public class Idioma
     {
+        public int IdIdioma { get; }
         private readonly string nombre;
 
-        public Idioma(string nombre)
+        public Idioma(int idIdioma, string nombre)
         {
+            IdIdioma = idIdioma;
             this.nombre = nombre;
         }
 

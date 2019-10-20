@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Personas.Core;
+﻿using Personas.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +16,5 @@ namespace Personas.Data
         public int Sexo { get; set; }
         public int IdIdioma { get; set; }
         public virtual Idiomas Idiomas { get; set; }
-    }
-
-    public class NombreConfiguration : IEntityTypeConfiguration<Nombres>
-    {
-        public void Configure(EntityTypeBuilder<Nombres> builder)
-        {
-            builder.Property(x => x.Nombre)
-                .IsRequired()
-                .HasMaxLength(50);
-        }
     }
 }

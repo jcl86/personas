@@ -19,7 +19,8 @@ namespace Personas.Host
         public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+                options.UseSqlServer(configuration.GetConnectionString("SqlServer"),
+                    opt => opt.MigrationsAssembly(nameof(Personas.Data)));
             });
     }
 
@@ -38,13 +39,7 @@ namespace Personas.Host
         {
             Api.Configuration.ConfigureServices(services, Environment)
            .AddEntityFrameworkCore(Configuration)
-           .AddCustomAuthentication()
-           .AddCustomAuthorization()
-           .AddCustomHealthChecks()
-           .AddHostingDiagnosticHandler();
-
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+           .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app)

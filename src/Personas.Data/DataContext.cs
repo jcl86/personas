@@ -6,16 +6,19 @@ namespace Personas.Data
     public class DataContext : DbContext
     {
         internal DbSet<Nombres> Nombres { get; set; }
-        internal DbSet<Nombres> Apellidos { get; set; }
+        internal DbSet<Apellidos> Apellidos { get; set; }
+        internal DbSet<Lugares> Lugares { get; set; }
+
         public DataContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var user = modelBuilder.Entity<User>();
-
-            user.HasKey(u => u.Id);
-            user.Property(u => u.Id).ValueGeneratedOnAdd();
-            user.Property(u => u.Name).IsRequired().HasMaxLength(200);
+            modelBuilder.ApplyConfiguration(new NombreConfiguration());
+            modelBuilder.ApplyConfiguration(new ApellidoConfiguration());
+            modelBuilder.ApplyConfiguration(new LocalidadConfiguration());
+            modelBuilder.ApplyConfiguration(new ProvinciaConfiguration());
+            modelBuilder.ApplyConfiguration(new RegionConfiguration());
+            modelBuilder.ApplyConfiguration(new PaisConfiguration());
         }
     }
 }

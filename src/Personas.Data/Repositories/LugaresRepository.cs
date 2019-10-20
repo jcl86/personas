@@ -1,16 +1,19 @@
-﻿using Personas.Data.Enums;
-using Personas.Data.Model;
+﻿using Personas.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Util.Core.Data;
 
 namespace Personas.Data.Repositories
 {
     public class LugaresRepository : Repository
     {
-        public LugaresRepository(Conexion c) : base(c) { }
+        private readonly IRandomProvider randomProvider;
+
+        public LugaresRepository(DataContext context, IRandomProvider randomProvider) : base(context)
+        {
+            this.randomProvider = randomProvider;
+        }
 
         public IEnumerable<Lugares> GetAllLugares() => c.Select<Lugares>("select * from Lugares");
 

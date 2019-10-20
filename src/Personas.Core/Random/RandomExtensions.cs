@@ -6,13 +6,13 @@ namespace Personas.Core
 {
     public static class RandomExtensions
     {
-        public static T ElementoAleatorio<T>(this IEnumerable<T> lista, IRandomProvider randomProvider)
+        public static T RandomElement<T>(this IEnumerable<T> lista, IRandomProvider randomProvider)
         {
             if (lista == null || !lista.Any()) return default;
             return lista.ElementAt(randomProvider.GetNumber(0, lista.Count() - 1));
         }
 
-        public static DateTime FechaAleatoria(int yearFrom, int yearTil, IRandomProvider randomProvider)
+        public static DateTime RandomDate(int yearFrom, int yearTil, IRandomProvider randomProvider)
         {
             int year = randomProvider.GetNumber(yearFrom, yearTil);
             int mes = randomProvider.GetNumber(1, 12);

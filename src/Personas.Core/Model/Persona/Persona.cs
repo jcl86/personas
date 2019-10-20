@@ -5,6 +5,15 @@ using System.Threading.Tasks;
 
 namespace Personas.Core
 {
+    public class Nombre
+    {
+        private readonly string nombre;
+
+        public Nombre(string nombre)
+        {
+            this.nombre = nombre;
+        }
+    }
     public class Persona
     {
         public string Dni { get; }

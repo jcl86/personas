@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Data", "src\Person
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Host", "src\Personas.Host\Personas.Host.csproj", "{8EDF2A3E-6981-4BE3-B005-82A3D889546E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personas.Api", "src\Personas.Api\Personas.Api.csproj", "{262D3515-0330-43CE-A2A2-56A867EF0A24}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netfwk", "src\netfwk\netfwk.csproj", "{CD5FB3FC-77B8-4C17-B1B5-0D7E35521F3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Api", "src\Personas.Api\Personas.Api.csproj", "{262D3515-0330-43CE-A2A2-56A867EF0A24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{262D3515-0330-43CE-A2A2-56A867EF0A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{262D3515-0330-43CE-A2A2-56A867EF0A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{262D3515-0330-43CE-A2A2-56A867EF0A24}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD5FB3FC-77B8-4C17-B1B5-0D7E35521F3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD5FB3FC-77B8-4C17-B1B5-0D7E35521F3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD5FB3FC-77B8-4C17-B1B5-0D7E35521F3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD5FB3FC-77B8-4C17-B1B5-0D7E35521F3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
