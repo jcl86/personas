@@ -1,4 +1,5 @@
-﻿using Personas.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using Personas.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,37 @@ namespace Personas.Data.Repositories
             this.randomProvider = randomProvider;
         }
 
-        public IEnumerable<Lugares> GetAllLugares() => c.Select<Lugares>("select * from Lugares");
-
-        public Lugares GetLugar(int? idProvincia = null, Comunidad? region = null, int idPais = 1)
+        private Lugar CreateLugar(Localidades localidad)
         {
-            StringBuilder sql = new StringBuilder($"select * from Lugares where IdPais = {idPais}");
-            if (region.HasValue) sql.Append(" and IdRegion = " + ((int)region));
-            if (idProvincia.HasValue) sql.Append(" and IdProvincia = " + idProvincia);
+            var regionBD = localidad.Provincias.Regiones;
+            var idiomaOficial = new Idioma(regionBD.IdiomaOficial.Id, regionBD.IdiomaOficial.NombreIdioma);
+            var idiomaCooficial = new Idioma(regionBD.IdiomaCooficial.Id, regionBD.IdiomaCooficial.NombreIdioma);
+            var region = new Region(regionBD.Id, regionBD.NombreRegion, regionBD.Habitantes,
+                regionBD.Densidad, regionBD.GentilicioM, regionBD.GentilicioF,
+                idiomaOficial, idiomaCooficial);
+            return new Lugar(localidad.Id, localidad.NombreLocalidad,
+                localidad.Provincias.NombreProvincia, region, regionBD.Pais.NombrePais,
+                localidad.TipoLocalidad, localidad.Provincias.GentilicioM,
+                localidad.Provincias.GentilicioF);
+        }
+
+        public IEnumerable<Lugar> GetAllLugares()
+        {
+            var localidades = context.Localidades.IncludeLugares();
+
+            foreach (var localidad in localidades)
+            {
+                yield return CreateLugar(localidad);
+            }
+        }
+
+        public Lugares GetLugar(Comunidad? region = null, int idPais = 1)
+        {
+            int idRegion = (int)region;
+            var localidades = context.Localidades.Where(x => x.Provincias.Regiones.IdPais == 1);
+            if (region.HasValue)
+                localidades = localidades.Where(x => x.Provincias.IdRegion == (int)region);
+             
 
             List<IEnumerable<Lugares>> listaDeListas = new List<IEnumerable<Lugares>>();
             for (int i = 1; i <= 5; i++)
@@ -63,23 +88,32 @@ namespace Personas.Data.Repositories
             return list;
         }
 
-        private double[] DistribucionEstadistica(List<IEnumerable<Lugares>> lugs)
+        private double[] DistribucionEstadistica(List<IEnumerable<Localidades>> localidades)
         {
-            switch (lugs.Count(x => x.Count() != 0))
+            var cantidad = localidades.Count(x => x.Count() != 0);
+            return (cantidad) switch
             {
-                case 4: return new double[] { 0.35, 0.35, 0.20, 0.10 };
-                case 3: return new double[] { 0.50, 0.40, 0.10 };
-                case 2: return new double[] { 0.50, 0.50 };
-                default:return new double[] { 0.45, 0.20, 0.20, 0.10, 0.05 };
-            }
+                4 => new double[] { 0.35, 0.35, 0.20, 0.10 },
+                3 => new double[] { 0.50, 0.40, 0.10 },
+                2 => new double[] { 0.50, 0.50 },
+                _ => new double[] { 0.45, 0.20, 0.20, 0.10, 0.05 },
+            };
         }
+    }
 
-        public int[] NumeroLocalidadesPorTipo()
+    public static class LugaresHelper
+    {
+        public static IQueryable<Localidades> IncludeLugares(this IQueryable<Localidades> localidades)
         {
-            var frecuencias = c.Select<int>("select count(*) from Localidades" +
-                           " group by TipoLocalidad" +
-                           " order by TipoLocalidad ");
-            return frecuencias.ToArray();
+             return localidades.Include(x => x.Provincias)
+               .ThenInclude(x => x.Regiones)
+               .ThenInclude(x => x.Pais)
+               .Include(x => x.Provincias)
+               .ThenInclude(x => x.Regiones)
+               .ThenInclude(x => x.IdiomaOficial)
+               .Include(x => x.Provincias)
+               .ThenInclude(x => x.Regiones)
+               .ThenInclude(x => x.IdiomaCooficial);
         }
     }
 }

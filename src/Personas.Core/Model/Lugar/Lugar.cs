@@ -13,7 +13,7 @@ namespace Personas.Core
         public Region Region { get; }
         public string Pais { get; }
 
-        private TipoLocalidad tipo;
+        private readonly TipoLocalidad tipo;
         private readonly string gentilicioMasculino;
         private readonly string gentilicioFemenino;
 
