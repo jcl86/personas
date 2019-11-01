@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Personas.Core
 {
     public interface IApellidosRepository
     {
-        IEnumerable<Apellido> GetApellidos(int numero, Cultura cultura = Cultura.Spanish);
+        Task<IEnumerable<Apellido>> GetApellidos(int numero, Cultura cultura = Cultura.Spanish);
     }
 }

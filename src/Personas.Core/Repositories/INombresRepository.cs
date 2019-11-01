@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Personas.Core
 {
     public interface INombresRepository
     {
-        IEnumerable<Nombre> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish);
+        Task<IEnumerable<Nombre>> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish);
     }
 }

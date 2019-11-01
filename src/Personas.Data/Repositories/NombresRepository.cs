@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Personas.Data.Repositories
 {
@@ -17,7 +18,7 @@ namespace Personas.Data.Repositories
             this.randomProvider = randomProvider;
         }
 
-        public IEnumerable<Nombre> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish)
+        public async Task<IEnumerable<Nombre>> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish)
         {
             if (numero < 100)
                 throw new ArgumentOutOfRangeException("La lista debe conener 100 nombres por lo menos");
@@ -32,26 +33,28 @@ namespace Personas.Data.Repositories
 
             var list = new List<IEnumerable<Nombres>>()
             {
-                nombresEnCultura.MuyComunes().ToList(),
-                nombresEnCultura.Comunes().ToList(),
-                nombresEnCultura.Normales().ToList(),
-                nombresEnCultura.NoTanComunes().ToList(),
-                nombresEnCultura.Raros().ToList(),
-                nombresEnCultura.MuyRaros().ToList()
+                await nombresEnCultura.MuyComunes().ToListAsync(),
+                await nombresEnCultura.Comunes().ToListAsync(),
+                await nombresEnCultura.Normales().ToListAsync(),
+                await nombresEnCultura.NoTanComunes().ToListAsync(),
+                await nombresEnCultura.Raros().ToListAsync(),
+                await nombresEnCultura.MuyRaros().ToListAsync()
             };
 
             double[] distribucion = { 0.33, 0.33, 0.18, 0.10, 0.04, 0.02 };
 
+            var result = new List<Nombre>();
             for (int i = 0; i < distribucion.Length; i++)
             {
                 for (int j = 0; j < numero * distribucion[i]; j++)
                 {
                     var item = list[i].RandomElement(randomProvider);
-                    yield return new Nombre(item.Nombre, 
+                    result.Add(new Nombre(item.Nombre,
                         item.NombreCompuesto,
-                        (FrecuenciaAparicion)i);
+                        (FrecuenciaAparicion)i));
                 }
             }
+            return result;
         }
     }
 }
