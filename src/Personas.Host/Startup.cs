@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,49 +6,38 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Personas.Host
 {
-    public static class IServiceCollectionExtensions
-    {
-        public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<DataContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("SqlServer"),
-                    opt => opt.MigrationsAssembly(nameof(Personas.Data)));
-            });
-    }
-
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-        private IHostingEnvironment Environment { get; }
+        private readonly IWebHostEnvironment environment;
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
-            Environment = environment;
+            this.environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Api.Configuration.ConfigureServices(services, Environment)
-           .AddEntityFrameworkCore(Configuration)
-           .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            Api.Configuration.ConfigureServices(services, environment)
+             .AddEntityFrameworkCore(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             Api.Configuration.Configure(app, host =>
             {
                 return host
                     .UseDefaultFiles()
-                    .UseStaticFiles()
+                    .UseStaticFiles();
             });
         }
     }

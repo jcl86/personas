@@ -2,6 +2,7 @@
 
 namespace Personas.Core
 {
+
     public class Apellido
     {
         private readonly string apellido;

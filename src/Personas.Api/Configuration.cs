@@ -8,7 +8,7 @@ namespace Personas.Api
 {
     public static class Configuration
     {
-        public static IServiceCollection ConfigureServices(IServiceCollection services, IHostingEnvironment environment)
+        public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
                 .AddHttpContextAccessor()

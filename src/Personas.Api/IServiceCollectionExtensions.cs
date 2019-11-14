@@ -11,8 +11,7 @@ namespace Personas.Api
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services) =>
             services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddControllers()
                 .AddApplicationPart(typeof(IServiceCollectionExtensions).Assembly)
                 .Services;
 
@@ -23,7 +22,7 @@ namespace Personas.Api
             return services;
         }
 
-        public static IServiceCollection AddCustomProblemDetails(this IServiceCollection services, IHostingEnvironment environment)
+        public static IServiceCollection AddCustomProblemDetails(this IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
                 .AddProblemDetails(configure =>

@@ -17,12 +17,8 @@ namespace Personas.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new NombreConfiguration());
-            modelBuilder.ApplyConfiguration(new ApellidoConfiguration());
-            modelBuilder.ApplyConfiguration(new LocalidadConfiguration());
-            modelBuilder.ApplyConfiguration(new ProvinciaConfiguration());
-            modelBuilder.ApplyConfiguration(new RegionConfiguration());
-            modelBuilder.ApplyConfiguration(new PaisConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            //string cs = @"<add name="Model1sdfzg" connectionString="data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=F:\DESARROLLO\Repos\Personas\src\Personas.Data\PersonasDB.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />"
         }
     }
 }

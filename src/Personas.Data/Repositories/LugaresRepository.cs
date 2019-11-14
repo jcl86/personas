@@ -43,7 +43,7 @@ namespace Personas.Data.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<Lugar>> GetLugares(int numero, int? idProvincia = null,
+        private async Task<IEnumerable<Lugar>> GetLugares(int numero, Provincia? provincia = null,
             Comunidad? region = null, int idPais = 1)
         {
             var localidades = context.Localidades.Where(x => x.Provincias.Regiones.IdPais == idPais);
@@ -51,8 +51,8 @@ namespace Personas.Data.Repositories
             if (region.HasValue)
                 localidades = localidades.Where(x => x.Provincias.IdRegion == (int)region);
 
-            if (idProvincia.HasValue)
-                localidades = localidades.Where(x => x.IdProvincia == idProvincia);
+            if (provincia.HasValue)
+                localidades = localidades.Where(x => x.IdProvincia == (int)provincia);
 
             var listaDeListas = new List<IEnumerable<Localidades>>()
             {
@@ -77,10 +77,12 @@ namespace Personas.Data.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<Lugar>> GetLugares(int numero)
+            => await GetLugares(numero, null, null);
         public async Task<IEnumerable<Lugar>> GetLugares(int numero, Comunidad region)
             => await GetLugares(numero, null, region);
-        public async Task<IEnumerable<Lugar>> GetLugares(int numero, int idProvincia)
-            => await GetLugares(numero, idProvincia);
+        public async Task<IEnumerable<Lugar>> GetLugares(int numero, Provincia provincia)
+            => await GetLugares(numero, provincia);
 
     }
 }

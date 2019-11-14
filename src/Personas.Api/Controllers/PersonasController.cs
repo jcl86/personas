@@ -1,43 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Personas.Core;
+using Personas.Data.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Personas.Api.Controllers
 {
+
     [ApiController]
     [Route("api/personas")]
     public class PersonasController : ControllerBase
     {
-        private readonly NombresRepository _context;
+        private readonly IPersonasService service;
 
-        public PersonasController(DataContext context)
+        public PersonasController(IPersonasService service)
         {
-            _context = context;
+            this.service = service;
         }
 
-        [HttpPost, Route("")]
-        public async Task<IActionResult> Post(UserRequest request)
+        [HttpGet, Route("{numero:int}")]
+        public async Task<IActionResult> Get(int numero)
         {
-            var isValid = ModelState.IsValid;
-
-            var user = new User
-            {
-                Name = request.Name,
-                Created = DateTime.UtcNow
-            };
-
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-
-            return Ok(user);
+            var personas = await service.GetPersonas(numero);
+            return Ok(personas);
         }
 
-        [HttpGet, Route("{id:int}")]
-        public IActionResult Get(int id)
+        [HttpGet, Route("{comunidad:string}/{numero:int}")]
+        public async Task<IActionResult> Get(Comunidad comunidad, int numero)
         {
-            return Ok(_context.Users.FirstOrDefault(u => u.Id == id));
+            var personas = await service.GetPersonas(numero, comunidad);
+            return Ok(personas);
+        }
+
+        [HttpGet, Route("{provincia:string}/{numero:int}")]
+        public async Task<IActionResult> Get(Provincia provincia, int numero)
+        {
+            var personas = await service.GetPersonas(numero, provincia);
+            return Ok(personas);
         }
     }
 }
