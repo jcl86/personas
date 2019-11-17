@@ -1,0 +1,31 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Personas.FunctionalTests
+{
+    public static class RequestBuilderExtensions
+    {
+        public static Task<HttpResponseMessage> PutAsync(this RequestBuilder requestBuilder)
+        {
+            return requestBuilder.SendAsync(HttpMethods.Put);
+        }
+        public static Task<HttpResponseMessage> DeleteAsync(this RequestBuilder requestBuilder)
+        {
+            return requestBuilder.SendAsync(HttpMethods.Delete);
+        }
+
+        public static RequestBuilder WithJsonBody<TContent>(this RequestBuilder builder, TContent content, string contentType = "application/json")
+        {
+            var json = JsonConvert.SerializeObject(content);
+
+            return builder.And(message =>
+            {
+                message.Content = new StringContent(json, Encoding.UTF8, contentType);
+            });
+        }
+    }
+}

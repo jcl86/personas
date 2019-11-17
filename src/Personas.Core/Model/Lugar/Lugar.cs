@@ -40,5 +40,4 @@ namespace Personas.Core
             return $"{Municipio}, {Provincia} ({Region})";
         }
     }
-
 }

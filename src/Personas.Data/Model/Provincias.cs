@@ -9,8 +9,8 @@ namespace Personas.Data
     public class Provincias : DatabaseEntity
     {
         public string NombreProvincia { get; set; }
-        public string GentilicioM { get; set; }
-        public string GentilicioF { get; set; }
+        public string GentilicioMasculino { get; set; }
+        public string GentilicioFemenino { get; set; }
 
         public int IdRegion { get; set; }
         public virtual Regiones Regiones { get; set; }

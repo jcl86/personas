@@ -7,11 +7,11 @@ namespace Personas.Host
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSqlite(this IServiceCollection services, IConfiguration configuration)
         {
             return services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("SqlServer"));
+                options.UseSqlite(configuration.GetValue<string>("ConnectionString:Sqlite"));
             });
         }
     }

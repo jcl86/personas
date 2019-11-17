@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Data", "src\Person
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Api", "src\Personas.Api\Personas.Api.csproj", "{262D3515-0330-43CE-A2A2-56A867EF0A24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personas.Host", "src\Personas.Host\Personas.Host.csproj", "{BEAD2509-6648-4E72-9244-634E4C1045D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Host", "src\Personas.Host\Personas.Host.csproj", "{BEAD2509-6648-4E72-9244-634E4C1045D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personas.FunctionalTests", "test\Personas.FunctionalTests\Personas.FunctionalTests.csproj", "{C8965625-1000-4D2D-B105-A90268FB9C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BEAD2509-6648-4E72-9244-634E4C1045D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEAD2509-6648-4E72-9244-634E4C1045D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEAD2509-6648-4E72-9244-634E4C1045D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

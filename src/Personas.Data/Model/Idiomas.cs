@@ -5,7 +5,7 @@ namespace Personas.Data
 {
     public class Idiomas : DatabaseEntity
     {
-        public string NombreIdioma { get; set; }
+        public string Nombre { get; set; }
 
         public virtual ICollection<Apellidos> Apellidos { get; set; }
         public virtual ICollection<Nombres> Nombres { get; set; }

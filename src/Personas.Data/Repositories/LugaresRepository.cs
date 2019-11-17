@@ -20,15 +20,19 @@ namespace Personas.Data.Repositories
         private Lugar CreateLugar(Localidades localidad)
         {
             var regionBD = localidad.Provincias.Regiones;
-            var idiomaOficial = new Idioma(regionBD.IdiomaOficial.Id, regionBD.IdiomaOficial.NombreIdioma);
-            var idiomaCooficial = new Idioma(regionBD.IdiomaCooficial.Id, regionBD.IdiomaCooficial.NombreIdioma);
-            var region = new Region(regionBD.Id, regionBD.NombreRegion, regionBD.Habitantes,
-                regionBD.Densidad, regionBD.GentilicioM, regionBD.GentilicioF,
+            var idiomaOficial = new Idioma(regionBD.IdiomaOficial.Id, regionBD.IdiomaOficial.Nombre);
+            Idioma idiomaCooficial = null;
+            if (regionBD.IdIdiomaCooficial.HasValue)
+            { 
+                idiomaCooficial = new Idioma(regionBD.IdiomaCooficial.Id, regionBD.IdiomaCooficial.Nombre);
+            }
+            var region = new Region(regionBD.Id, regionBD.Nombre, regionBD.NumeroHabitantes,
+                regionBD.Densidad, regionBD.GentilicioMasculino, regionBD.GentilicioFemenino,
                 idiomaOficial, idiomaCooficial);
-            return new Lugar(localidad.Id, localidad.NombreLocalidad,
-                localidad.Provincias.NombreProvincia, region, regionBD.Pais.NombrePais,
-                localidad.TipoLocalidad, localidad.Provincias.GentilicioM,
-                localidad.Provincias.GentilicioF);
+            return new Lugar(localidad.Id, localidad.Nombre,
+                localidad.Provincias.NombreProvincia, region, regionBD.Pais.Nombre,
+                localidad.Tipo, localidad.Provincias.GentilicioMasculino,
+                localidad.Provincias.GentilicioFemenino);
         }
 
         public async Task<IEnumerable<Lugar>> GetAllLugares()

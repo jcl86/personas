@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Hellang.Middleware.ProblemDetails;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Personas.Api
 {
@@ -23,7 +24,20 @@ namespace Personas.Api
               Func<IApplicationBuilder, IApplicationBuilder> configureHost)
         {
             return configureHost(app)
-                .UseProblemDetails();
+                .UseProblemDetails()
+                .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                     name: "default",
+                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapGet("/", async context =>
+                    {
+                        await context.Response.WriteAsync($"Welcome to Personas API from {Environment.MachineName}");
+                    });
+                });
         }
     }
 }

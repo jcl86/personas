@@ -17,13 +17,15 @@ namespace Personas.Core
         private readonly string gentilicioFemenino;
 
         public Region(int id, string nombre, int habitantes, int densidad, string gentilicioMasculino, string gentilicioFemenino,
-            params Idioma[] idiomas) : base(id)
+            Idioma idiomaOficial, Idioma idiomaCooficial = null) : base(id)
         {
             Nombre = nombre;
             Habitantes = habitantes;
             Densidad = densidad;
 
-            this.idiomas = idiomas.ToList();
+            idiomas = new List<Idioma>() { idiomaOficial };
+            if (idiomaCooficial != null)
+                idiomas.Add(idiomaCooficial);
 
             this.gentilicioMasculino = gentilicioMasculino;
             this.gentilicioFemenino = gentilicioFemenino;
@@ -40,7 +42,7 @@ namespace Personas.Core
         
         public string TextoDescriptivo()
         {
-            return $"{Nombre} es una comunidad autónoma. Los {Gentilicio(Genero.Male)} hablan {Lenguas}. " +
+            return $"{Nombre} es una comunidad autónoma en la que se habla {Lenguas}. " +
                 $"Tiene alrededor de {Habitantes} habitantes, " +
                 $"y una densidad de de población de {Densidad} hab/km2\n";
         }

@@ -9,8 +9,8 @@ namespace Personas.Data
 {
     public class Localidades : DatabaseEntity
     {
-        public string NombreLocalidad { get; set; }
-        public TipoLocalidad TipoLocalidad { get; set; }
+        public string Nombre { get; set; }
+        public TipoLocalidad Tipo { get; set; }
 
         public int IdProvincia { get; set; }
         public virtual Provincias Provincias { get; set; }

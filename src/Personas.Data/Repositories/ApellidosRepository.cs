@@ -24,7 +24,7 @@ namespace Personas.Data.Repositories
 
             var apellidosEnCultura = context.Apellidos
                 .Include(x => x.Idioma)
-                .Where(x => x.IdCultura == cultura);
+                .Where(x => x.Cultura == cultura);
 
             var list = new List<IEnumerable<Apellidos>>()
             {
@@ -46,7 +46,7 @@ namespace Personas.Data.Repositories
                     var item = list[i].RandomElement(randomProvider);
                     result.Add(new Apellido(item.Apellido,
                         (FrecuenciaAparicion)i,
-                        new Idioma(item.IdIdioma, item.Idioma.NombreIdioma)));
+                        new Idioma(item.IdIdioma, item.Idioma.Nombre)));
                 }
             }
             return result;

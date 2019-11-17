@@ -8,7 +8,7 @@ namespace Personas.Data
 {
     public class Paises : DatabaseEntity
     {
-        public string NombrePais { get; set; }
+        public string Nombre { get; set; }
 
         public virtual ICollection<Regiones> Regiones { get; set; }
 

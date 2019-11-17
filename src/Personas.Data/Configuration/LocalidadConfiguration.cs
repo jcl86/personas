@@ -7,9 +7,11 @@ namespace Personas.Data
     {
         public void Configure(EntityTypeBuilder<Localidades> builder)
         {
-            builder.Property(x => x.NombreLocalidad)
+            builder.Property(x => x.Nombre)
                 .IsRequired()
                 .HasMaxLength(100);
+
+
         }
     }
 }
