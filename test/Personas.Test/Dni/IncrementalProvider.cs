@@ -2,11 +2,13 @@
 
 namespace Personas.Test
 {
-    public class TestRandomProvider : IRandomProvider
+    public class IncrementalProvider : IRandomProvider
     {
+        int x = 0;
         public int GetNumber(int minimun, int maximun)
         {
-            return 1;
+            if (x == 9) x = 0; else x++;
+            return x;
         }
     }
 }

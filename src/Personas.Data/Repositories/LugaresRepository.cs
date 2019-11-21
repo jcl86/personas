@@ -67,15 +67,24 @@ namespace Personas.Data.Repositories
                 await localidades.Villages().ToListAsync()
             };
 
-            double[] distribucion = { 0.45, 0.20, 0.20, 0.10, 0.05 };
+            var removedLists = listaDeListas.RemoveAll(x => !x.Any());
+
+            List<double> distribucion = new List<double>() { 0.45, 0.20, 0.20, 0.10, 0.05 };
+            foreach(int i in Enumerable.Range(0, removedLists))
+            {
+                distribucion.RemoveAt(distribucion.Count - 1);
+            }
 
             var result = new List<Lugar>();
-            for (int i = 0; i < distribucion.Length; i++)
+            for (int i = 0; i < distribucion.Count; i++)
             {
                 for (int j = 0; j < numero * distribucion[i]; j++)
                 {
-                    var localidad = listaDeListas[i].RandomElement(randomProvider);
-                    result.Add(CreateLugar(localidad));
+                    if (listaDeListas[i].Any())
+                    {
+                        var localidad = listaDeListas[i].RandomElement(randomProvider);
+                        result.Add(CreateLugar(localidad));
+                    }
                 }
             }
             return result;
@@ -86,7 +95,7 @@ namespace Personas.Data.Repositories
         public async Task<IEnumerable<Lugar>> GetLugares(int numero, Comunidad region)
             => await GetLugares(numero, null, region);
         public async Task<IEnumerable<Lugar>> GetLugares(int numero, Provincia provincia)
-            => await GetLugares(numero, provincia);
+            => await GetLugares(numero, provincia, null);
 
     }
 }

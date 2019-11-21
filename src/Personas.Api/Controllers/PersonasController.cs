@@ -41,7 +41,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("{comunidad}/{numero:int}")]
+        [HttpGet, Route("comunidad/{comunidad}/{numero:int}")]
         public async Task<IActionResult> GetFromComunidad(string comunidad, int numero = 100)
         {
             var comunidadConvertida = new EnumConverter<Provincia>(comunidad).Convert();
@@ -49,7 +49,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("hombres/{comunidad}/{numero:int}")]
+        [HttpGet, Route("hombres/comunidad/{comunidad}/{numero:int}")]
         public async Task<IActionResult> GetHombresFromComunidad(string comunidad, int numero = 100)
         {
             var comunidadConvertida = new EnumConverter<Provincia>(comunidad).Convert();
@@ -57,7 +57,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("mujeres/{comunidad}/{numero:int}")]
+        [HttpGet, Route("mujeres/comunidad/{comunidad}/{numero:int}")]
         public async Task<IActionResult> GetMujeresFromComunidad(string comunidad, int numero = 100)
         {
             var comunidadConvertida = new EnumConverter<Provincia>(comunidad).Convert();
@@ -65,7 +65,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("{provincia}/{numero:int}")]
+        [HttpGet, Route("provincia/{provincia}/{numero:int}")]
         public async Task<IActionResult> GetFromProvincia(string provincia, int numero = 100)
         {
             var provinciaConvertida = new EnumConverter<Provincia>(provincia).Convert();
@@ -73,7 +73,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("hombres/{provincia}/{numero:int}")]
+        [HttpGet, Route("hombres/provincia/{provincia}/{numero:int}")]
         public async Task<IActionResult> GetHombresFromProvincia(string provincia, int numero = 100)
         {
             var provinciaConvertida = new EnumConverter<Provincia>(provincia).Convert();
@@ -81,7 +81,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("mujeres/{provincia}/{numero:int}")]
+        [HttpGet, Route("mujeres/provincia/{provincia}/{numero:int}")]
         public async Task<IActionResult> GetMujeresFromProvincia(string provincia, int numero = 100)
         {
             var provinciaConvertida = new EnumConverter<Provincia>(provincia).Convert();
