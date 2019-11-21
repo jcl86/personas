@@ -4,6 +4,7 @@ using Hellang.Middleware.ProblemDetails;
 using Personas.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Personas.Data.Repositories;
 
 namespace Personas.Api
 {
@@ -11,19 +12,24 @@ namespace Personas.Api
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services) =>
             services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddControllers()
                 .AddApplicationPart(typeof(IServiceCollectionExtensions).Assembly)
                 .Services;
 
 
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
-            services.AddSingleton<IRandomProvider, RandomProvider>();
+            services.AddScoped<System.Random>();
+            services.AddScoped<IRandomProvider, RandomProvider>();
+            services.AddScoped<INombresRepository, NombresRepository>();
+            services.AddScoped<IApellidosRepository, ApellidosRepository>();
+            services.AddScoped<ILugaresRepository, LugaresRepository>();
+            services.AddScoped<IDatesProvider, DatesProvider>();
+            services.AddScoped<IPersonasService, PersonasService>();
             return services;
         }
 
-        public static IServiceCollection AddCustomProblemDetails(this IServiceCollection services, IHostingEnvironment environment)
+        public static IServiceCollection AddCustomProblemDetails(this IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
                 .AddProblemDetails(configure =>

@@ -7,9 +7,13 @@ namespace Personas.Data
     {
         public void Configure(EntityTypeBuilder<Paises> builder)
         {
-            builder.Property(x => x.NombrePais)
+            builder.Property(x => x.Nombre)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.HasMany(e => e.Regiones)
+               .WithOne(e => e.Pais)
+               .HasForeignKey(e => e.IdPais);
         }
     }
 }

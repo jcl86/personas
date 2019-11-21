@@ -10,6 +10,7 @@ namespace Personas.Data
             builder.Property(x => x.Apellido)
                 .IsRequired()
                 .HasMaxLength(50);
+
         }
     }
 }

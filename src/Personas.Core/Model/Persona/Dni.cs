@@ -9,7 +9,7 @@ namespace Personas.Core
         public Dni(IRandomProvider randomProvider)
         {
             foreach (var i in Enumerable.Range(0, 8))
-                randomProvider.GetNumber(0, 9);
+                Number += randomProvider.GetNumber(0, 9) * (int)System.Math.Pow(10, i);
         }
 
         public override string ToString() => $"{Number}{GetLetra()}";

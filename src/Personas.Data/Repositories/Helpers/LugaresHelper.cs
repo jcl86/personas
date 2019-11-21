@@ -20,18 +20,18 @@ namespace Personas.Data.Repositories
         }
 
         public static IQueryable<Localidades> Metropolies(this IQueryable<Localidades> list)
-          => list.Where(x => x.TipoLocalidad == TipoLocalidad.Metropoli);
+          => list.Where(x => x.Tipo == TipoLocalidad.Metropoli).IncludeLugares();
 
         public static IQueryable<Localidades> BigCities(this IQueryable<Localidades> list)
-          => list.Where(x => x.TipoLocalidad == TipoLocalidad.BigCity);
+          => list.Where(x => x.Tipo == TipoLocalidad.BigCity).IncludeLugares();
 
         public static IQueryable<Localidades> BigTowns(this IQueryable<Localidades> list)
-          => list.Where(x => x.TipoLocalidad == TipoLocalidad.BigTown);
+          => list.Where(x => x.Tipo == TipoLocalidad.BigTown).IncludeLugares();
 
         public static IQueryable<Localidades> Towns(this IQueryable<Localidades> list)
-          => list.Where(x => x.TipoLocalidad == TipoLocalidad.Town);
+          => list.Where(x => x.Tipo == TipoLocalidad.Town).IncludeLugares();
 
         public static IQueryable<Localidades> Villages(this IQueryable<Localidades> list)
-          => list.Where(x => x.TipoLocalidad == TipoLocalidad.Village);
+          => list.Where(x => x.Tipo == TipoLocalidad.Village).IncludeLugares();
     }
 }

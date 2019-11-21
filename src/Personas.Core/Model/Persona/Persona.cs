@@ -12,7 +12,7 @@ namespace Personas.Core
         public Apellido PrimerApellido { get; }
         public Apellido SegundoApellido { get; }
 
-        public Genero Sexo { get; }
+        public Genero Genero { get; }
         public Lugar Origen { get; }
         public Cultura Cultura { get; }
 
@@ -31,7 +31,7 @@ namespace Personas.Core
             Nombre = nombre;
             PrimerApellido = primerApellido;
             SegundoApellido = segundoApellido;
-            Sexo = genero;
+            Genero = genero;
             Origen = origen;
             FechaNacimiento = fechaNacimiento;
             Dni = new Dni(randomProvider).ToString();

@@ -8,14 +8,14 @@ namespace Personas.Data
 {
     public class Regiones : DatabaseEntity
     {
-        public string NombreRegion { get; set; }
-        public int Habitantes { get; set; }
+        public string Nombre { get; set; }
+        public int NumeroHabitantes { get; set; }
         public int Densidad { get; set; }
 
         public int? PorcentajeIdiomaOficial { get; set; }
 
-        public string GentilicioM { get; set; }
-        public string GentilicioF { get; set; }
+        public string GentilicioMasculino { get; set; }
+        public string GentilicioFemenino { get; set; }
 
         public int IdIdiomaOficial { get; set; }
         public virtual Idiomas IdiomaOficial { get; set; }

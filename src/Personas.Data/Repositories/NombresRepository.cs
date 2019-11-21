@@ -26,7 +26,7 @@ namespace Personas.Data.Repositories
             var nombresEnCultura = context
                 .Nombres
                 .Include(x => x.Idioma)
-                .Where(x => x.IdCultura == cultura);
+                .Where(x => x.Cultura == cultura);
 
             if (genero != null)
                 nombresEnCultura = nombresEnCultura.Where(x => x.Sexo == genero.IdGenero);
@@ -50,8 +50,8 @@ namespace Personas.Data.Repositories
                 {
                     var item = list[i].RandomElement(randomProvider);
                     result.Add(new Nombre(item.Nombre,
-                        item.NombreCompuesto,
-                        (FrecuenciaAparicion)i));
+                        item.EsCompuesto,
+                        (FrecuenciaAparicion)i, Genero.Create(item.Sexo)));
                 }
             }
             return result;
