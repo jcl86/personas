@@ -9,6 +9,7 @@ namespace Personas.Api
 {
     public static class Configuration
     {
+        public const string ApiPrefix = "api";
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services

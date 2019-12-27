@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Personas.Api
 {
     [ApiController]
-    [Route("api/nombres")]
+    [Route("api/[Controller]")]
     public class NombresController : ControllerBase
     {
         private readonly INombresRepository repository;
@@ -17,15 +17,8 @@ namespace Personas.Api
             this.repository = repository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<NombreViewModel>>> Get()
-        {
-            var nombres = await repository.GetNombres(100);
-            return Ok(Map(nombres));
-        }
-
         [HttpGet, Route("{numero:int}")]
-        public async Task<ActionResult<IEnumerable<NombreViewModel>>> GetNumero(int numero = 100)
+        public async Task<ActionResult<IEnumerable<NombreViewModel>>> Get(int numero = 100)
         {
             var nombres = await repository.GetNombres(numero);
             return Ok(Map(nombres));

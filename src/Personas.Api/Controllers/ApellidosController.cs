@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Personas.Api
 {
     [ApiController]
-    [Route("api/apellidos")]
+    [Route("api/[Controller]")]
     public class ApellidosController : ControllerBase
     {
         private readonly IApellidosRepository repository;

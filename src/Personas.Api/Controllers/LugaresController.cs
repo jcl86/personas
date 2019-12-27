@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Personas.Api
 {
     [ApiController]
-    [Route("api/lugares")]
+    [Route("api/[Controller]")]
     public class LugaresController : ControllerBase
     {
         private readonly ILugaresRepository repository;
@@ -32,10 +32,10 @@ namespace Personas.Api
             return Ok(Map(lugares));
         }
 
-        [HttpGet, Route("comunidad/{comunidad}/{numero:int}")]
-        public async Task<IActionResult> GetFromComunidad(string comunidad, int numero = 100)
+        [HttpGet, Route("region/{region}/{numero:int}")]
+        public async Task<IActionResult> GetFromRegion(string region, int numero = 100)
         {
-            var comunidadConvertida = new EnumConverter<Comunidad>(comunidad).Convert();
+            var comunidadConvertida = new EnumConverter<Comunidad>(region).Convert();
             var lugares = await repository.GetLugares(numero, comunidadConvertida);
             return Ok(Map(lugares));
         }
