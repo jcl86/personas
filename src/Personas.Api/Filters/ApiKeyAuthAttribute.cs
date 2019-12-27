@@ -29,7 +29,7 @@ namespace Personas.Api
                 return;
             }
 
-            if (apiKeyValue != null && !apiKeyValue.Equals(potentialApiKey))
+            if (!apiKeyValue.Equals(potentialApiKey))
             {
                 context.Result = new UnauthorizedResult();
                 return;

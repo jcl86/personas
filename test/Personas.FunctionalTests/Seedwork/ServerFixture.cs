@@ -24,6 +24,7 @@ namespace Personas.FunctionalTests
                     .ConfigureAppConfiguration(app =>
                     {
                         app.AddJsonFile("appsettings.json", optional: true);
+                        app.AddJsonFile("appsettingssecret.json", optional: true);
                         app.AddEnvironmentVariables();
                     });
             })

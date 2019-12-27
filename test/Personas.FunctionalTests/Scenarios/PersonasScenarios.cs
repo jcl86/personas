@@ -215,7 +215,7 @@ namespace Personas.FunctionalTests
                 .CreateRequest(endpoint.GetHombresFromRegion(Comunidad.Galicia.ToString(), cantidadSolicitada))
                 .WithApiKeyHeader()
                 .GetAsync();
-
+            var xxx = await response.Content.ReadAsStringAsync();
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
@@ -236,19 +236,17 @@ namespace Personas.FunctionalTests
                 .WithApiKeyHeader()
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
-
             var json = await response.Content.ReadAsStringAsync();
+            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
 
             response = await Given
             .Server
             .CreateRequest(endpoint.GetFromProvincia("provinciaEquivocada", 100))
+            .WithApiKeyHeader()
             .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
-
             json = await response.Content.ReadAsStringAsync();
-
+            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
 
@@ -268,6 +266,7 @@ namespace Personas.FunctionalTests
             response = await Given
             .Server
             .CreateRequest(endpoint.GetFromRegion("regionEquivocada", 100))
+            .WithApiKeyHeader()
             .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status404NotFound);

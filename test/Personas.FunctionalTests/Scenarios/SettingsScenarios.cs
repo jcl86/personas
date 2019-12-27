@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using Personas.Api;
+using FluentAssertions;
 
 namespace Personas.FunctionalTests
 {
@@ -21,7 +23,9 @@ namespace Personas.FunctionalTests
         [Fact]
         public void Should_check_settings()
         {
-            var config = Given.Configuration;
+            var configuration = Given.Configuration;
+            string apiKeyValue = configuration.GetValue<string>(key: ApiKeyAuthAttribute.ApiKeyConfigurationName);
+            apiKeyValue.Should().Be("1234");
         }
     }
 }
