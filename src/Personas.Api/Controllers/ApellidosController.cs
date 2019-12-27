@@ -23,12 +23,12 @@ namespace Personas.Api
         /// <param name="numero">Número de apellidos (mínimo 100)</param>
         /// <returns></returns>
         [HttpGet, Route("{numero:int}")]
-        public async Task<IActionResult> Get(int numero = 100)
+        public async Task<ActionResult<IEnumerable<ApellidoViewModel>>> Get(int numero = 100)
         {
             var apellidos = await repository.GetApellidos(numero);
             return Ok(Map(apellidos));
         }
 
-        private IEnumerable<ApellidoViewModel> Map(IEnumerable<Apellido> list) => list.Select(x => new ApellidoViewModel(x)).ToList();
+        private IEnumerable<ApellidoViewModel> Map(IEnumerable<Apellido> list) => list.Select(x => new ApellidoMapper(x).Map()).ToList();
     }
 }

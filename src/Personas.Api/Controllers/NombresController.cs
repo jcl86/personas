@@ -38,7 +38,7 @@ namespace Personas.Api
             return Ok(Map(nombres));
         }
 
-        private IEnumerable<NombreViewModel> Map(IEnumerable<Nombre> list) => list.Select(x => new NombreViewModel(x)).ToList();
+        private IEnumerable<NombreViewModel> Map(IEnumerable<Nombre> list) => list.Select(x => new NombreMapper(x).Map()).ToList();
         
     }
 }

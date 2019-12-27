@@ -15,20 +15,5 @@ namespace Personas.Core
         public DateTime FechaNacimiento { get; set; }
         public int Edad { get; set; }
         public string Detalle { get; set; }
-
-        public PersonaViewModel(Persona persona)
-        {
-            Nombre = new NombreViewModel(persona.Nombre);
-            PrimerApellido = new ApellidoViewModel(persona.PrimerApellido);
-            SegundoApellido = new ApellidoViewModel(persona.SegundoApellido);
-            NombreCompleto = persona.ToString();
-            Sexo = persona.Genero;
-            Origen = new LugarViewModel(persona.Origen);
-            FechaNacimiento = persona.FechaNacimiento;
-            Dni = persona.Dni;
-            Cultura = persona.Cultura.ToString();
-            Edad = persona.Edad();
-            Detalle = persona.Detalle();
-        }
     }
 }

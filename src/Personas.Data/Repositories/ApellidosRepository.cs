@@ -19,8 +19,7 @@ namespace Personas.Data.Repositories
 
         public async Task<IEnumerable<Apellido>> GetApellidos(int numero, Cultura cultura = Cultura.Spanish)
         {
-            if (numero < 100)
-                throw new ArgumentOutOfRangeException("La lista debe conener 100 apellidos por lo menos");
+            numero.ThrowWhenLowerThan100();
 
             var apellidosEnCultura = context.Apellidos
                 .Include(x => x.Idioma)

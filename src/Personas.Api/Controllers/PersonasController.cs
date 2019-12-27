@@ -89,6 +89,6 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        private IEnumerable<PersonaViewModel> Map(IEnumerable<Persona> list) => list.Select(x => new PersonaViewModel(x)).ToList();
+        private IEnumerable<PersonaViewModel> Map(IEnumerable<Persona> list) => list.Select(x => new PersonaMapper(x).Map()).ToList();
     }
 }

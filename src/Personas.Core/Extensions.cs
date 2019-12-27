@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace Personas.Core
 {
+
     public static class Extensions
     {
         public static string Descripcion<T>(this T source) where T : Enum

@@ -5,6 +5,7 @@ using Personas.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Personas.Data.Repositories;
+using System;
 
 namespace Personas.Api
 {
@@ -35,6 +36,13 @@ namespace Personas.Api
                 .AddProblemDetails(configure =>
                 {
                     configure.IncludeExceptionDetails = _ => environment.EnvironmentName == "Development";
+                    configure.Map<QuantityUnderHundredException>(exception => new ProblemDetails()
+                    {
+                        Title = exception.Message,
+                        Detail = exception.StackTrace,
+                        Status = StatusCodes.Status400BadRequest,
+                        Type = nameof(QuantityUnderHundredException)
+                    });
                 });
         }
 

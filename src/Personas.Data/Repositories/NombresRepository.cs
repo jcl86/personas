@@ -20,8 +20,7 @@ namespace Personas.Data.Repositories
 
         public async Task<IEnumerable<Nombre>> GetNombres(int numero, Genero genero = null, Cultura cultura = Cultura.Spanish)
         {
-            if (numero < 100)
-                throw new ArgumentOutOfRangeException("La lista debe conener 100 nombres por lo menos");
+            numero.ThrowWhenLowerThan100();
 
             var nombresEnCultura = context
                 .Nombres

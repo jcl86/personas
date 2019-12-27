@@ -40,6 +40,6 @@ namespace Personas.Api
             return Ok(Map(lugares));
         }
 
-        private IEnumerable<LugarViewModel> Map(IEnumerable<Lugar> list) => list.Select(x => new LugarViewModel(x)).ToList();
+        private IEnumerable<LugarViewModel> Map(IEnumerable<Lugar> list) => list.Select(x => new LugarMapper(x).Map()).ToList();
     }
 }

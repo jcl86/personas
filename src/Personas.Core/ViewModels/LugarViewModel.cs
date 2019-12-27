@@ -9,16 +9,5 @@
         public string Tipo { get; set; }
         public string GentilicioMasculino { get; set; }
         public string GentilicioFemenino { get; set; }
-
-        public LugarViewModel(Lugar lugar)
-        {
-            Municipio = lugar.Municipio;
-            Provincia = lugar.Provincia;
-            Region = new RegionViewModel(lugar.Region);
-            Pais = lugar.Pais;
-            Tipo = lugar.Tipo();
-            GentilicioMasculino = lugar.Gentilicio(Genero.Male);
-            GentilicioFemenino = lugar.Gentilicio(Genero.Female);
-        }
     }
 }

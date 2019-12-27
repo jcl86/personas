@@ -12,19 +12,5 @@
         public string LenguaCooficial { get; set; }
         public string Lenguas { get; set; }
         public string TextoDescriptivo { get; set; }
-
-        public RegionViewModel(Region region)
-        {
-            Nombre = region.Nombre;
-            Habitantes = region.Habitantes;
-            Densidad = region.Densidad;
-            GentilicioMasculino = region.Gentilicio(Genero.Male);
-            GentilicioFemenino = region.Gentilicio(Genero.Female);
-            Superficie = region.Superficie;
-            LenguaOficial = region.LenguaOficial.ToString();
-            LenguaCooficial = region.LenguaCooficial?.ToString();
-            Lenguas = region.Lenguas;
-            TextoDescriptivo = region.TextoDescriptivo();
-        }
     }
 }
