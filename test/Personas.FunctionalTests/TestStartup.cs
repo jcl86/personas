@@ -27,7 +27,7 @@ namespace Personas.FunctionalTests
             Configuration.ConfigureServices(services, environment)
                 .AddDbContext<DataContext>(setup =>
                 {
-                    setup.UseSqlite(configuration.GetConnectionString("Sqlite"));
+                    setup.UseSqlite(configuration.GetValue<string>("ConnectionString:Sqlite"));
                 })
                 .AddAuthentication()
                 .AddTestServer();

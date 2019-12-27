@@ -25,11 +25,11 @@ namespace Personas.FunctionalTests
         [Fact]
         public async Task Should_obtain_100_apellidos()
         {
-            int cantidaSolicitada = 100;
+            int cantidadSolicitada = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidaSolicitada))
+                .CreateRequest(endpoint.Get(cantidadSolicitada))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -37,7 +37,20 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<ApellidoViewModel>>(json);
 
-            result.Count().Should().Be(cantidaSolicitada);
+            result.Count().Should().Be(cantidadSolicitada);
+        }
+
+        [Fact]
+        public async Task Should_not_allow_to_obtain_less_than_100()
+        {
+            int cantidadSolicitada = 90;
+
+            var response = await Given
+                .Server
+                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .GetAsync();
+
+            response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
     }
 }

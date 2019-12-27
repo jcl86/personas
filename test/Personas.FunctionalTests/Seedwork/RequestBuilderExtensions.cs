@@ -27,5 +27,14 @@ namespace Personas.FunctionalTests
                 message.Content = new StringContent(json, Encoding.UTF8, contentType);
             });
         }
+
+        public static async Task<TModel> ReadJsonResponse<TModel>(this HttpResponseMessage response)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<TModel>(json);
+            return result;
+        }
     }
+
+
 }
