@@ -43,6 +43,13 @@ namespace Personas.Api
                         Status = StatusCodes.Status400BadRequest,
                         Type = nameof(QuantityUnderHundredException)
                     });
+                    configure.Map<ConversionException>(exception => new ProblemDetails()
+                    {
+                        Title = exception.Message,
+                        Detail = exception.StackTrace,
+                        Status = StatusCodes.Status404NotFound,
+                        Type = nameof(ConversionException)
+                    });
                 });
         }
 

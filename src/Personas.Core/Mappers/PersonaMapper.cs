@@ -17,7 +17,7 @@
                 PrimerApellido = new ApellidoMapper(persona.PrimerApellido).Map(),
                 SegundoApellido = new ApellidoMapper(persona.SegundoApellido).Map(),
                 NombreCompleto = persona.ToString(),
-                Sexo = persona.Genero,
+                Sexo = persona.Genero.ToString(),
                 Origen = new LugarMapper(persona.Origen).Map(),
                 FechaNacimiento = persona.FechaNacimiento,
                 Dni = persona.Dni,

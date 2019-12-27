@@ -29,7 +29,7 @@ namespace Personas.Api
             var apellidos = await apellidosRepository.GetApellidos(numero * 2);
             var lugares = await lugaresRepository.GetLugares(numero);
 
-            return CreatePersonas(nombres, apellidos, lugares);
+            return CreatePersonas(numero, nombres, apellidos, lugares);
         }
 
         public async Task<IEnumerable<Persona>> GetPersonas(int numero, Comunidad region, Genero genero = null)
@@ -38,7 +38,7 @@ namespace Personas.Api
             var apellidos = await apellidosRepository.GetApellidos(numero * 2);
             var lugares = await lugaresRepository.GetLugares(numero);
 
-            return CreatePersonas(nombres, apellidos, lugares);
+            return CreatePersonas(numero, nombres, apellidos, lugares);
         }
 
         public async Task<IEnumerable<Persona>> GetPersonas(int numero, Provincia provincia, Genero genero = null)
@@ -47,16 +47,22 @@ namespace Personas.Api
             var apellidos = await apellidosRepository.GetApellidos(numero * 2);
             var lugares = await lugaresRepository.GetLugares(numero);
 
-            return CreatePersonas(nombres, apellidos, lugares);
+            return CreatePersonas(numero, nombres, apellidos, lugares);
         }
 
-        private IEnumerable<Persona> CreatePersonas(IEnumerable<Nombre> nombres, IEnumerable<Apellido> apellidos, IEnumerable<Lugar> lugares)
+        private IEnumerable<Persona> CreatePersonas(int total, IEnumerable<Nombre> nombres, IEnumerable<Apellido> apellidos, IEnumerable<Lugar> lugares)
         {
-            int count = nombres.Count();
-            for (int i = 0; i < nombres.Count(); i++)
+            int nombresCount = nombres.Count();
+            int apellidosCount = apellidos.Count();
+            int lugaresCount = lugares.Count();
+            foreach (var i in Enumerable.Range(0, total))
             {
-                yield return new Persona(nombres.ElementAt(i), apellidos.ElementAt(i), apellidos.ElementAt(i + count), nombres.ElementAt(i).Genero,
-                    lugares.ElementAt(i), datesProvider.GetRandomBirthDate(randomProvider), randomProvider);
+                var nombre = i < nombresCount ? nombres.ElementAt(i) : nombres.RandomElement(randomProvider);
+                var primerApellido = apellidos.ElementAt(i);
+                var segundoApellido = i * 2 < apellidosCount ? apellidos.ElementAt(i * 2) : apellidos.RandomElement(randomProvider);
+                var lugar = i < lugaresCount ? lugares.ElementAt(i) : lugares.RandomElement(randomProvider);
+                yield return new Persona(nombre, primerApellido, segundoApellido, nombre.Genero,
+                    lugar, datesProvider.GetRandomBirthDate(randomProvider), randomProvider);
             }
         }
     }

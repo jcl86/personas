@@ -31,7 +31,7 @@ namespace Personas.Core
             if (Enum.TryParse(nombre, out TEnum result))
                 return result;
 
-            throw new ArgumentException($"{nombre} no se pudo convertir en {typeof(TEnum)}");
+            throw new ConversionException(nombre, nameof(TEnum));
         }
     }
 }

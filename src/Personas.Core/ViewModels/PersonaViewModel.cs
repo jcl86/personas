@@ -9,7 +9,7 @@ namespace Personas.Core
         public ApellidoViewModel PrimerApellido { get; set; }
         public ApellidoViewModel SegundoApellido { get; set; }
         public string NombreCompleto { get; set; }
-        public Genero Sexo { get; set; }
+        public string Sexo { get; set; }
         public LugarViewModel Origen { get; set; }
         public string Cultura { get; set; }
         public DateTime FechaNacimiento { get; set; }

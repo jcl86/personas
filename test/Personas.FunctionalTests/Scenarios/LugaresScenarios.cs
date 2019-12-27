@@ -55,14 +55,14 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<LugarViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
             result.All(x => x.Provincia.Equals("Murcia")).Should().BeTrue();
         }
 
         [Fact]
-        public async Task Should_obtain_142_lugares_from_la_mancha()
+        public async Task Should_obtain_81_lugares_from_la_mancha()
         {
-            int cantidadSolicitada = 142;
+            int cantidadSolicitada = 81;
 
             var response = await Given
                 .Server
@@ -74,8 +74,8 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<LugarViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
-            result.All(x => x.Region.Nombre.Equals("Región de Murcia")).Should().BeTrue();
+            result.Count().Should().BeInRange(cantidadSolicitada - 20, cantidadSolicitada + 20);
+            result.All(x => x.Region.Nombre.Equals("Castilla - La Mancha")).Should().BeTrue();
         }
     }
 }
