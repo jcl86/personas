@@ -7,6 +7,10 @@ using Microsoft.Extensions.Hosting;
 using System.IO;
 using Personas.Api;
 using FluentAssertions;
+using System.Linq;
+using Personas.Core;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Personas.FunctionalTests
 {
@@ -26,6 +30,23 @@ namespace Personas.FunctionalTests
             var configuration = Given.Configuration;
             string apiKeyValue = configuration.GetValue<string>(key: ApiKeyAuthAttribute.ApiKeyConfigurationName);
             apiKeyValue.Should().Be("1234");
+        }
+
+        [Fact]
+        public void Create_super_secure_password()
+        {
+            var randomProvider = new RandomProvider(new Random());
+
+            var list = new List<string>()
+            {
+                "0123456789",
+                "ABZDEFGHIJKLMNOPQRSTUVWXYZ",
+                "abcdefghijklmnopqrstuvwxyz",
+                "@#$%&*"
+            };
+
+            var password = Enumerable.Range(0, 3).SelectMany(i => Enumerable.Range(0, 40).Select(x => list[i].RandomElement(randomProvider))).RandomizeList(randomProvider);
+            Debug.WriteLine(string.Concat(password));
         }
     }
 }

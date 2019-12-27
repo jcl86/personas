@@ -39,7 +39,6 @@ namespace Personas.Host
                       Title = "Personas API", 
                       Version = "v1",
                       Description = "Api que permite obtener datos de personas aleatorios",
-                      TermsOfService = new Uri("https://example.com/terms"),
                       Contact = new OpenApiContact
                       {
                           Name = "jcl",
@@ -62,12 +61,14 @@ namespace Personas.Host
             Api.Configuration.Configure(app, host =>
             {
                 return host
+                    //.UseDeveloperExceptionPage() //Para depurar errores en pro
                     .UseDefaultFiles()
                     .UseStaticFiles()
                     .UseSwagger()
                     .UseSwaggerUI(c =>
                     {
                         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Personas V1");
+                        c.RoutePrefix = "";
                     });
             });
         }
