@@ -50,6 +50,13 @@ namespace Personas.Api
                         Status = StatusCodes.Status404NotFound,
                         Type = nameof(ConversionException)
                     });
+                    configure.Map<AuthorizationDisabledException>(exception => new ProblemDetails()
+                    {
+                        Title = exception.Message,
+                        Detail = exception.StackTrace,
+                        Status = StatusCodes.Status400BadRequest,
+                        Type = nameof(AuthorizationDisabledException)
+                    });
                 });
         }
 

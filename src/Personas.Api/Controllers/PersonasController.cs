@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Personas.Core;
 using Personas.Data.Repositories;
 using System;
@@ -9,20 +10,24 @@ using System.Threading.Tasks;
 
 namespace Personas.Api
 {
+    [ApiKeyAuth]
     [ApiController]
     [Route("api/[Controller]")]
     public class PersonasController : ControllerBase
     {
         private readonly IPersonasService service;
+        private readonly Logger<PersonasLog> logger;
 
-        public PersonasController(IPersonasService service)
+        public PersonasController(IPersonasService service, Logger<PersonasLog> logger)
         {
             this.service = service;
+            this.logger = logger;
         }
 
         [HttpGet, Route("{numero:int}")]
         public async Task<IActionResult> Get(int numero = 100)
         {
+            logger.LogInformation(PersonasLog.PersonasId, ControllerContext.ToString());
             var personas = await service.GetPersonas(numero);
             return Ok(Map(personas));
         }

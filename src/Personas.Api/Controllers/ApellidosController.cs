@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Personas.Api
 {
+    [ApiKeyAuth]
     [ApiController]
     [Route("api/[Controller]")]
     public class ApellidosController : ControllerBase

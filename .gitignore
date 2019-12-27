@@ -334,3 +334,4 @@ ASALocalRun/
 .localhistory/
 Data/Properties/Resources.resx
 Data/Properties/Resources.Designer.cs
+src/Personas.Host/appsettingssecret.json

@@ -34,6 +34,14 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<TModel>(json);
             return result;
         }
+
+        public static RequestBuilder WithApiKeyHeader(this RequestBuilder builder)
+        {
+            return builder.And(message =>
+            {
+                message.Headers.Add(Api.ApiKeyAuthAttribute.ApiKeyConfigurationName, "1234");
+            });
+        }
     }
 
 

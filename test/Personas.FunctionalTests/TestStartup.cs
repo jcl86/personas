@@ -24,7 +24,7 @@ namespace Personas.FunctionalTests
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.ConfigureServices(services, environment)
+            Api.Configuration.ConfigureServices(services, environment)
                 .AddDbContext<DataContext>(setup =>
                 {
                     setup.UseSqlite(configuration.GetValue<string>("ConnectionString:Sqlite"));
@@ -35,7 +35,7 @@ namespace Personas.FunctionalTests
 
         public void Configure(IApplicationBuilder app)
         {
-            Configuration.Configure(app, host => host);
+            Api.Configuration.Configure(app, host => host);
         }
     }
 }

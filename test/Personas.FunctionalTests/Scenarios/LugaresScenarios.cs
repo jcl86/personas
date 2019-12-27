@@ -30,6 +30,7 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -48,6 +49,7 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromProvincia("murcia", cantidadSolicitada))
+                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -67,6 +69,7 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromRegion("castillaLaMancha", cantidadSolicitada))
+                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);

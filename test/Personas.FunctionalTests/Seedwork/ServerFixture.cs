@@ -3,11 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Personas.FunctionalTests
 {
     public class ServerFixture
     {
+        public IConfiguration Configuration { get; set; }
         public TestServer Server { get; private set; }
 
         public ServerFixture()
@@ -32,6 +34,8 @@ namespace Personas.FunctionalTests
             host.StartAsync().Wait();
 
             Server = host.GetTestServer();
+
+            Configuration = Server.Services.GetService<IConfiguration>();
         }
     }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Personas.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Personas.Api.ApellidosController.Get(System.Int32)">
+            <summary>
+            Obtiene una lista de apellidos
+            </summary>
+            <param name="numero">Número de apellidos (mínimo 100)</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

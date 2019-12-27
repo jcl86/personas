@@ -30,6 +30,7 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -48,9 +49,23 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+        }
+
+        [Fact]
+        public async Task Should_not_allow_to_obtain_requests_without_api_key()
+        {
+            int cantidadSolicitada = 100;
+
+            var response = await Given
+                .Server
+                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .GetAsync();
+
+            response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
         }
     }
 }

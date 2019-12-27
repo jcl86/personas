@@ -21,6 +21,11 @@ namespace Personas.Host
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureAppConfiguration(app =>
+                    {
+                        app.AddJsonFile("appsettingssecret.json", optional: true);
+                        app.AddEnvironmentVariables();
+                    });
                 });
     }
 }
