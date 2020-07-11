@@ -129,7 +129,7 @@ namespace Personas.Test
         {
             var converter = new EnumConverter<Provincia>(inputText);
 
-            Assert.Throws<ArgumentException>(() => converter.Convert());
+            Assert.Throws<ConversionException>(() => converter.Convert());
         }
 
         [Fact]
