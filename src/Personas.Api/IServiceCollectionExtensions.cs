@@ -20,7 +20,7 @@ namespace Personas.Api
 
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
-            services.AddScoped<System.Random>();
+            services.AddScoped<Random>();
             services.AddScoped<IRandomProvider, RandomProvider>();
             services.AddScoped<INombresRepository, NombresRepository>();
             services.AddScoped<IApellidosRepository, ApellidosRepository>();
