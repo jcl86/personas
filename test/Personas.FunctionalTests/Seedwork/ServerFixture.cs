@@ -15,10 +15,9 @@ namespace Personas.FunctionalTests
         public ServerFixture()
         {
             var host = new HostBuilder()
-            .ConfigureWebHost(webBuilder =>
-            {
-                webBuilder
-                    .UseTestServer()
+               .ConfigureWebHost(webBuilder =>
+               {
+                   webBuilder.UseTestServer()
                     .UseStartup<TestStartup>()
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .ConfigureAppConfiguration(app =>
@@ -31,11 +30,6 @@ namespace Personas.FunctionalTests
             .Start();
 
             Server = host.GetTestServer();
-
-            host.StartAsync().Wait();
-
-            Server = host.GetTestServer();
-
             Configuration = Server.Services.GetService<IConfiguration>();
         }
     }

@@ -1,0 +1,9 @@
+<Project>
+    <Import Project="build/dependencies.props"/>
+    <PropertyGroup Label="Default Metadata">
+        <Authors>Jorge</Authors>
+        <BackendPublishUrl>https://personashost.azurewebsites.net</BackendPublishUrl>
+        <FrontendPublishUrl>not yet</FrontendPublishUrl>
+        <RepositoryUrl>https://github.com/jcl86/personas</RepositoryUrl>
+    </PropertyGroup>
+</Project>

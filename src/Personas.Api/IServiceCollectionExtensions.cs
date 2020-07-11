@@ -35,7 +35,7 @@ namespace Personas.Api
             return services
                 .AddProblemDetails(configure =>
                 {
-                    configure.IncludeExceptionDetails = _ => environment.EnvironmentName == "Development";
+                    configure.IncludeExceptionDetails = (ctx, exception) => environment.EnvironmentName == "Development";
                     configure.Map<QuantityUnderHundredException>(exception => new ProblemDetails()
                     {
                         Title = exception.Message,
