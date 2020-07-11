@@ -20,7 +20,7 @@ namespace Personas.Api
 
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
-            services.AddScoped<System.Random>();
+            services.AddScoped<Random>();
             services.AddScoped<IRandomProvider, RandomProvider>();
             services.AddScoped<INombresRepository, NombresRepository>();
             services.AddScoped<IApellidosRepository, ApellidosRepository>();
@@ -35,7 +35,7 @@ namespace Personas.Api
             return services
                 .AddProblemDetails(configure =>
                 {
-                    configure.IncludeExceptionDetails = _ => environment.EnvironmentName == "Development";
+                    configure.IncludeExceptionDetails = (ctx, exception) => environment.EnvironmentName == "Development";
                     configure.Map<QuantityUnderHundredException>(exception => new ProblemDetails()
                     {
                         Title = exception.Message,
