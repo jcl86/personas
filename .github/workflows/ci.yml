@@ -34,7 +34,7 @@ jobs:
     - name: Variable Substitution
       uses: microsoft/variable-substitution@v1
       with:
-        files: 'personas/src/Personas.Host/appsettings.json'
+        files: '${{env.DOTNET_ROOT}}/app/appsettings.json'
       env:
         AppSettings.TestValue: "${{ secrets.TEST}}"
     
