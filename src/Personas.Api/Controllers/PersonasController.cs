@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Personas.Core;
 using Personas.Data.Repositories;
@@ -16,10 +18,20 @@ namespace Personas.Api
     public class PersonasController : ControllerBase
     {
         private readonly IPersonasService service;
+        private readonly IConfiguration configuration;
 
-        public PersonasController(IPersonasService service)
+        public PersonasController(IPersonasService service, IConfiguration configuration)
         {
             this.service = service;
+            this.configuration = configuration;
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("test")]
+        public IActionResult Test()
+        {
+            var testValue = configuration.GetValue<string>("TestValue");
+            return Ok(testValue);
         }
 
         [HttpGet, Route("{numero:int}")]

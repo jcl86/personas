@@ -1,4 +1,4 @@
-name: .NET Core
+name: CI CD
 
 on:
   push:
@@ -31,6 +31,13 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
 
+    - name: Variable Substitution
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: 'personas/src/Personas.Host/appsettings.json'
+      env:
+        AppSettings.TestValue: "${{ secrets.TEST}}"
+    
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2.1
       with:
