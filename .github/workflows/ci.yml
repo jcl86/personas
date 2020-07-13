@@ -1,4 +1,4 @@
-name: CI CD
+name: Deploy to Azure
 
 on:
   push:
@@ -34,9 +34,9 @@ jobs:
     - name: Variable Substitution
       uses: microsoft/variable-substitution@v1
       with:
-        files: '${{env.DOTNET_ROOT}}/app/appsettings.json'
+        files: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/app/appsettings.json'
       env:
-        AppSettings.TestValue: "${{ secrets.TEST}}"
+        AppSettings.TestValue: "${{ secrets.TEST }}"
     
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2.1
