@@ -36,7 +36,7 @@ jobs:
       with:
         files: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/app/appsettings.json'
       env:
-        AppSettings.TestValue: "${{ secrets.TEST }}"
+        TestValue: "${{ secrets.TEST }}"
     
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2.1
