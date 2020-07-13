@@ -26,14 +26,6 @@ namespace Personas.Api
             this.configuration = configuration;
         }
 
-        [AllowAnonymous]
-        [HttpGet, Route("test")]
-        public IActionResult Test()
-        {
-            var testValue = configuration.GetValue<string>("TestValue");
-            return Ok(testValue);
-        }
-
         [HttpGet, Route("{numero:int}")]
         public async Task<IActionResult> Get(int numero = 100)
         {

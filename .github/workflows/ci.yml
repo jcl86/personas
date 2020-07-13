@@ -36,7 +36,7 @@ jobs:
       with:
         files: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/app/appsettings.json'
       env:
-        TestValue: "${{ secrets.TEST }}"
+        ApiKey: "${{ secrets.API_KEY }}"
     
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2.1
