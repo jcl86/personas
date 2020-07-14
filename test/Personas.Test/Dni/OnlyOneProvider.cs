@@ -1,4 +1,4 @@
-﻿using Personas.Core;
+﻿using Personas.Domain;
 
 namespace Personas.Test
 {

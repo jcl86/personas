@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +31,7 @@ namespace Personas.Host
         {
             Api.Configuration.ConfigureServices(services, environment)
              .AddSqlite(Configuration)
+             .AddCustomAuthentication(Configuration, environment)
              .AddSwaggerGen(c =>
               {
                   c.SwaggerDoc("v1", new OpenApiInfo 

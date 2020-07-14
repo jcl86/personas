@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Personas.Core;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Personas.Domain;
+using Personas.Shared;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Personas.Api
 {
-    [ApiKeyAuth]
+    [Authorize]
     [ApiController]
     [Route("api/[Controller]")]
     public class NombresController : ControllerBase

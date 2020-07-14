@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Hellang.Middleware.ProblemDetails;
-using Personas.Core;
+using Personas.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Personas.Data.Repositories;
@@ -26,7 +26,7 @@ namespace Personas.Api
             services.AddScoped<IApellidosRepository, ApellidosRepository>();
             services.AddScoped<ILugaresRepository, LugaresRepository>();
             services.AddScoped<IDatesProvider, DatesProvider>();
-            services.AddScoped<IPersonasService, PersonasService>();
+            services.AddScoped<IPersonasService, PeopleSearcher>();
             return services;
         }
 
@@ -36,6 +36,20 @@ namespace Personas.Api
                 .AddProblemDetails(configure =>
                 {
                     configure.IncludeExceptionDetails = (ctx, exception) => environment.EnvironmentName == "Development";
+                    configure.Map<UnauthorizedAccessException>(exception => new ProblemDetails()
+                    {
+                        Title = exception.Message,
+                        Detail = exception.StackTrace,
+                        Status = StatusCodes.Status401Unauthorized,
+                        Type = nameof(UnauthorizedAccessException)
+                    });
+                    configure.Map<AccessForbidenException>(exception => new ProblemDetails()
+                    {
+                        Title = exception.Message,
+                        Detail = exception.StackTrace,
+                        Status = StatusCodes.Status403Forbidden,
+                        Type = nameof(AccessForbidenException)
+                    });
                     configure.Map<QuantityUnderHundredException>(exception => new ProblemDetails()
                     {
                         Title = exception.Message,
@@ -50,12 +64,12 @@ namespace Personas.Api
                         Status = StatusCodes.Status404NotFound,
                         Type = nameof(ConversionException)
                     });
-                    configure.Map<AuthorizationDisabledException>(exception => new ProblemDetails()
+                    configure.Map<DomainException>(exception => new ProblemDetails()
                     {
                         Title = exception.Message,
                         Detail = exception.StackTrace,
                         Status = StatusCodes.Status400BadRequest,
-                        Type = nameof(AuthorizationDisabledException)
+                        Type = nameof(DomainException)
                     });
                 });
         }

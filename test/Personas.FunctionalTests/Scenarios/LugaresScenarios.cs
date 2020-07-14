@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using Personas.Core;
+using Personas.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

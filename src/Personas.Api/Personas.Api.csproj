@@ -12,11 +12,14 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Hellang.Middleware.ProblemDetails" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Personas.Core\Personas.Core.csproj" />
+    <ProjectReference Include="..\Personas.Core\Personas.Domain.csproj" />
     <ProjectReference Include="..\Personas.Data\Personas.Data.csproj" />
+    <ProjectReference Include="..\Personas.Domain\Personas.Domain.csproj" />
+    <ProjectReference Include="..\Personas.Shared\Personas.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,6 +15,7 @@ namespace Personas.Api
             return services
                 .AddHttpContextAccessor()
                 .AddCustomMvc()
+                .AddAuthorization()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour()
                 .AddCustomServices();

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Personas.Core;
+using Personas.Domain;
 using System.Linq;
 
 namespace Personas.Data.Repositories

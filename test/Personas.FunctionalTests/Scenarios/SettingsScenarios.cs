@@ -8,7 +8,7 @@ using System.IO;
 using Personas.Api;
 using FluentAssertions;
 using System.Linq;
-using Personas.Core;
+using Personas.Domain;
 using System.Collections.Generic;
 using System.Diagnostics;
 
