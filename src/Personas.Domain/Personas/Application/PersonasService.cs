@@ -7,14 +7,14 @@ namespace Personas.Domain
 {
     public class PeopleSearcher
     {
-        private readonly INombresRepository nombresRepository;
-        private readonly IApellidosRepository apellidosRepository;
-        private readonly ILugaresRepository lugaresRepository;
+        private readonly INamesRepository nombresRepository;
+        private readonly ISurnamesRepository apellidosRepository;
+        private readonly IPlacesRepository lugaresRepository;
         private readonly RandomProvider randomProvider;
         private readonly IDatesProvider datesProvider;
 
-        public PeopleSearcher(INombresRepository nombresRepository, IApellidosRepository apellidosRepository, 
-            ILugaresRepository lugaresRepository, RandomProvider randomProvider, IDatesProvider datesProvider)
+        public PeopleSearcher(INamesRepository nombresRepository, ISurnamesRepository apellidosRepository, 
+            IPlacesRepository lugaresRepository, RandomProvider randomProvider, IDatesProvider datesProvider)
         {
             this.nombresRepository = nombresRepository;
             this.apellidosRepository = apellidosRepository;
@@ -23,34 +23,34 @@ namespace Personas.Domain
             this.datesProvider = datesProvider;
         }
 
-        public async Task<IEnumerable<Persona>> GetPersonas(int numero, Genero genero = null)
+        public async Task<IEnumerable<Persona>> GetPersonas(int numero, Gender genero = null)
         {
-            var nombres = await nombresRepository.GetNombres(numero, genero);
-            var apellidos = await apellidosRepository.GetApellidos(numero * 2);
-            var lugares = await lugaresRepository.GetLugares(numero);
+            var nombres = await nombresRepository.GetNames(numero, genero);
+            var apellidos = await apellidosRepository.GetSurnamesList(numero * 2);
+            var lugares = await lugaresRepository.GetPlaces(numero);
 
             return CreatePersonas(numero, nombres, apellidos, lugares);
         }
 
-        public async Task<IEnumerable<Persona>> GetPersonas(int numero, Comunidad region, Genero genero = null)
+        public async Task<IEnumerable<Persona>> GetPersonas(int numero, AutonomousCommunity region, Gender genero = null)
         {
-            var nombres = await nombresRepository.GetNombres(numero, genero);
-            var apellidos = await apellidosRepository.GetApellidos(numero * 2);
+            var nombres = await nombresRepository.GetNames(numero, genero);
+            var apellidos = await apellidosRepository.GetSurnamesList(numero * 2);
             var lugares = await lugaresRepository.GetLugares(numero, region);
 
             return CreatePersonas(numero, nombres, apellidos, lugares);
         }
 
-        public async Task<IEnumerable<Persona>> GetPersonas(int numero, Provincia provincia, Genero genero = null)
+        public async Task<IEnumerable<Persona>> GetPersonas(int numero, Province provincia, Gender genero = null)
         {
-            var nombres = await nombresRepository.GetNombres(numero, genero);
-            var apellidos = await apellidosRepository.GetApellidos(numero * 2);
+            var nombres = await nombresRepository.GetNames(numero, genero);
+            var apellidos = await apellidosRepository.GetSurnamesList(numero * 2);
             var lugares = await lugaresRepository.GetLugares(numero, provincia);
 
             return CreatePersonas(numero, nombres, apellidos, lugares);
         }
 
-        private IEnumerable<Persona> CreatePersonas(int total, IEnumerable<Nombre> nombres, IEnumerable<Apellido> apellidos, IEnumerable<Lugar> lugares)
+        private IEnumerable<Persona> CreatePersonas(int total, IEnumerable<Name> nombres, IEnumerable<Surname> apellidos, IEnumerable<Place> lugares)
         {
             int nombresCount = nombres.Count();
             int apellidosCount = apellidos.Count();
@@ -61,7 +61,7 @@ namespace Personas.Domain
                 var primerApellido = apellidos.ElementAt(i);
                 var segundoApellido = i * 2 < apellidosCount ? apellidos.ElementAt(i * 2) : apellidos.RandomElement(randomProvider);
                 var lugar = i < lugaresCount ? lugares.ElementAt(i) : lugares.RandomElement(randomProvider);
-                yield return new Persona(nombre, primerApellido, segundoApellido, nombre.Genero,
+                yield return new Persona(nombre, primerApellido, segundoApellido, nombre.Gender,
                     lugar, datesProvider.GetRandomBirthDate(randomProvider), randomProvider);
             }
         }

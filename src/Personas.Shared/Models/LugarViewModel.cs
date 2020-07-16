@@ -1,13 +1,13 @@
 ﻿namespace Personas.Shared
 {
-    public class LugarViewModel 
+    public class PlaceViewModel 
     {
-        public string Municipio { get; set; }
-        public string Provincia { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
         public RegionViewModel Region { get; set; }
-        public string Pais { get; set; }
-        public string Tipo { get; set; }
-        public string GentilicioMasculino { get; set; }
-        public string GentilicioFemenino { get; set; }
+        public string Country { get; set; }
+        public string CityType { get; set; }
+        public string MaleDemonym { get; set; }
+        public string FemaleDemonym { get; set; }
     }
 }

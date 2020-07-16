@@ -58,7 +58,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<NombreViewModel>>(json);
 
             result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
-            result.All(x => x.Genero.Equals(Genero.Female.ToString())).Should().BeTrue();
+            result.All(x => x.Genero.Equals(Gender.Female.ToString())).Should().BeTrue();
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<NombreViewModel>>(json);
 
             result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
-            result.All(x => x.Genero.Equals(Genero.Male.ToString())).Should().BeTrue();
+            result.All(x => x.Genero.Equals(Gender.Male.ToString())).Should().BeTrue();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Personas.Domain
 
     public static class QuantityUnderHundredHelper
     {
-        public static void ThrowWhenLowerThan100(this int quantity)
+        public static void EnsureQuantityIsEqualOrHigerThan100(this int quantity)
         {
             if (quantity < 100)
                 throw new QuantityUnderHundredException(quantity);

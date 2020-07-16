@@ -15,9 +15,9 @@ namespace Personas.Domain
         {
             return new PersonaViewModel()
             {
-                Nombre = new NombreMapper(persona.Nombre).Map(),
-                PrimerApellido = new ApellidoMapper(persona.PrimerApellido).Map(),
-                SegundoApellido = new ApellidoMapper(persona.SegundoApellido).Map(),
+                Nombre = new NameMapper(persona.Nombre).Map(),
+                PrimerApellido = new SurnameMapper(persona.PrimerApellido).Map(),
+                SegundoApellido = new SurnameMapper(persona.SegundoApellido).Map(),
                 NombreCompleto = persona.ToString(),
                 Sexo = persona.Genero.ToString(),
                 Origen = new LugarMapper(persona.Origen).Map(),

@@ -8,13 +8,13 @@ namespace Personas.Domain
     public class Persona
     {
         public string Dni { get; }
-        public Nombre Nombre { get; }
-        public Apellido PrimerApellido { get; }
-        public Apellido SegundoApellido { get; }
+        public Name Nombre { get; }
+        public Surname PrimerApellido { get; }
+        public Surname SegundoApellido { get; }
 
-        public Genero Genero { get; }
-        public Lugar Origen { get; }
-        public Cultura Cultura { get; }
+        public Gender Genero { get; }
+        public Place Origen { get; }
+        public Culture Cultura { get; }
 
         public DateTime FechaNacimiento { get; }
         public int Edad()
@@ -25,8 +25,8 @@ namespace Personas.Domain
             return age;
         }
         
-        public Persona(Nombre nombre, Apellido primerApellido, Apellido segundoApellido, 
-            Genero genero, Lugar origen, DateTime fechaNacimiento, RandomProvider randomProvider)
+        public Persona(Name nombre, Surname primerApellido, Surname segundoApellido, 
+            Gender genero, Place origen, DateTime fechaNacimiento, RandomProvider randomProvider)
         {
             Nombre = nombre;
             PrimerApellido = primerApellido;
@@ -35,7 +35,7 @@ namespace Personas.Domain
             Origen = origen;
             FechaNacimiento = fechaNacimiento;
             Dni = new Dni(randomProvider).ToString();
-            Cultura = Cultura.Spanish;
+            Cultura = Culture.Spanish;
         }
 
         public string Detalle() => $"{Nombre}, {Edad()} años, de {Origen.ToString()}";

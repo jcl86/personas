@@ -10,7 +10,7 @@ namespace Personas.Data
     public class Nombres : DatabaseEntity
     {
         public string Nombre { get; set; }
-        public Cultura Cultura { get; set; }
+        public Culture Cultura { get; set; }
         public int Comun { get; set; }
         public bool EsCompuesto { get; set; }
         public int Sexo { get; set; }

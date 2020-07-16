@@ -1,10 +1,10 @@
 ﻿namespace Personas.Shared
 {
-    public class NombreViewModel
+    public class NameViewModel
     {
-        public string Nombre { get; set; }
-        public bool EsCompuesto { get; set; }
-        public string Frecuencia { get; set; }
-        public string Genero { get; set; }
+        public string Name { get; set; }
+        public bool MoreThanOneWord { get; set; }
+        public string Frecuency { get; set; }
+        public string Gender { get; set; }
     }
 }

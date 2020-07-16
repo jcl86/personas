@@ -21,12 +21,15 @@ namespace Personas.Api
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<Random>();
-            services.AddScoped<IRandomProvider, RandomProvider>();
-            services.AddScoped<INombresRepository, NombresRepository>();
-            services.AddScoped<IApellidosRepository, ApellidosRepository>();
-            services.AddScoped<ILugaresRepository, LugaresRepository>();
+            services.AddScoped<RandomProvider>();
+            services.AddScoped<INamesRepository, NamesRepository>();
+            services.AddScoped<ISurnamesRepository, SurnamesRepository>();
+            services.AddScoped<IPlacesRepository, PlacesRepository>();
             services.AddScoped<IDatesProvider, DatesProvider>();
-            services.AddScoped<IPersonasService, PeopleSearcher>();
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<PeopleSearcher>();
+            services.AddScoped<LoginService>();
+            services.AddScoped<RegisterService>();
             return services;
         }
 

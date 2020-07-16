@@ -6,7 +6,7 @@ namespace Personas.Domain
 {
     public static class Extensions
     {
-        public static string Descripcion<T>(this T source) where T : Enum
+        public static string Description<T>(this T source) where T : Enum
         {
             FieldInfo fi = source.GetType().GetField(source.ToString());
 

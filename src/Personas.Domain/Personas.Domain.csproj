@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Personas\Infraestructure\" />
+    <Folder Include="Places\Application\" />
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
   </ItemGroup>

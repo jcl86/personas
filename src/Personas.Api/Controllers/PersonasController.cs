@@ -35,21 +35,21 @@ namespace Personas.Api
         [HttpGet, Route("hombres/{numero:int}")]
         public async Task<IActionResult> GetHombres(int numero = 100)
         {
-            var personas = await searcher.GetPersonas(numero, Genero.Male);
+            var personas = await searcher.GetPersonas(numero, Gender.Male);
             return Ok(Map(personas));
         }
 
         [HttpGet, Route("mujeres/{numero:int}")]
         public async Task<IActionResult> GetMujeres(int numero = 100)
         {
-            var personas = await searcher.GetPersonas(numero, Genero.Female);
+            var personas = await searcher.GetPersonas(numero, Gender.Female);
             return Ok(Map(personas));
         }
 
         [HttpGet, Route("region/{region}/{numero:int}")]
         public async Task<IActionResult> GetFromRegion(string region, int numero = 100)
         {
-            var comunidadConvertida = new EnumConverter<Comunidad>(region).Convert();
+            var comunidadConvertida = new EnumConverter<AutonomousCommunity>(region).Convert();
             var personas = await searcher.GetPersonas(numero, comunidadConvertida);
             return Ok(Map(personas));
         }
@@ -57,23 +57,23 @@ namespace Personas.Api
         [HttpGet, Route("hombres/region/{region}/{numero:int}")]
         public async Task<IActionResult> GetHombresFromRegion(string region, int numero = 100)
         {
-            var comunidadConvertida = new EnumConverter<Comunidad>(region).Convert();
-            var personas = await searcher.GetPersonas(numero, comunidadConvertida, Genero.Male);
+            var comunidadConvertida = new EnumConverter<AutonomousCommunity>(region).Convert();
+            var personas = await searcher.GetPersonas(numero, comunidadConvertida, Gender.Male);
             return Ok(Map(personas));
         }
 
         [HttpGet, Route("mujeres/region/{region}/{numero:int}")]
         public async Task<IActionResult> GetMujeresFromRegion(string region, int numero = 100)
         {
-            var comunidadConvertida = new EnumConverter<Comunidad>(region).Convert();
-            var personas = await searcher.GetPersonas(numero, comunidadConvertida, Genero.Female);
+            var comunidadConvertida = new EnumConverter<AutonomousCommunity>(region).Convert();
+            var personas = await searcher.GetPersonas(numero, comunidadConvertida, Gender.Female);
             return Ok(Map(personas));
         }
 
         [HttpGet, Route("provincia/{provincia}/{numero:int}")]
         public async Task<IActionResult> GetFromProvincia(string provincia, int numero = 100)
         {
-            var provinciaConvertida = new EnumConverter<Provincia>(provincia).Convert();
+            var provinciaConvertida = new EnumConverter<Province>(provincia).Convert();
             var personas = await searcher.GetPersonas(numero, provinciaConvertida);
             return Ok(Map(personas));
         }
@@ -81,16 +81,16 @@ namespace Personas.Api
         [HttpGet, Route("hombres/provincia/{provincia}/{numero:int}")]
         public async Task<IActionResult> GetHombresFromProvincia(string provincia, int numero = 100)
         {
-            var provinciaConvertida = new EnumConverter<Provincia>(provincia).Convert();
-            var personas = await searcher.GetPersonas(numero, provinciaConvertida, Genero.Male);
+            var provinciaConvertida = new EnumConverter<Province>(provincia).Convert();
+            var personas = await searcher.GetPersonas(numero, provinciaConvertida, Gender.Male);
             return Ok(Map(personas));
         }
 
         [HttpGet, Route("mujeres/provincia/{provincia}/{numero:int}")]
         public async Task<IActionResult> GetMujeresFromProvincia(string provincia, int numero = 100)
         {
-            var provinciaConvertida = new EnumConverter<Provincia>(provincia).Convert();
-            var personas = await searcher.GetPersonas(numero, provinciaConvertida, Genero.Female);
+            var provinciaConvertida = new EnumConverter<Province>(provincia).Convert();
+            var personas = await searcher.GetPersonas(numero, provinciaConvertida, Gender.Female);
             return Ok(Map(personas));
         }
 

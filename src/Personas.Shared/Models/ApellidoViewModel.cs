@@ -1,6 +1,6 @@
 ﻿namespace Personas.Shared
 {
-    public class ApellidoViewModel
+    public class SurnameViewModel
     {
         public string Apellido { get; set; }
         public string Idioma { get; set; }

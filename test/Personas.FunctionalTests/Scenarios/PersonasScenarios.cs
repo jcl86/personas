@@ -77,7 +77,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
-            result.Select(x => x.Sexo.Should().Be(Genero.Female.ToString()));
+            result.Select(x => x.Sexo.Should().Be(Gender.Female.ToString()));
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
-            result.Select(x => x.Sexo.Should().Be(Genero.Male.ToString()));
+            result.Select(x => x.Sexo.Should().Be(Gender.Male.ToString()));
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace Personas.FunctionalTests
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromProvincia(Provincia.Tarragona.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetFromProvincia(Province.Tarragona.ToString(), cantidadSolicitada))
                 .WithApiKeyHeader()
                 .GetAsync();
 
@@ -127,7 +127,7 @@ namespace Personas.FunctionalTests
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetMujeresFromProvincia(Provincia.Gipuzkoa.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetMujeresFromProvincia(Province.Gipuzkoa.ToString(), cantidadSolicitada))
                 .WithApiKeyHeader()
                 .GetAsync();
 
@@ -137,7 +137,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
-            result.Select(x => x.Sexo.Should().Be(Genero.Female.ToString()));
+            result.Select(x => x.Sexo.Should().Be(Gender.Female.ToString()));
             result.Select(x => x.Origen.Provincia.Should().Be("Gipuzkoa"));
         }
 
@@ -159,7 +159,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
-            result.Select(x => x.Sexo.Should().Be(Genero.Male.ToString()));
+            result.Select(x => x.Sexo.Should().Be(Gender.Male.ToString()));
             result.Select(x => x.Origen.Provincia.Should().Be("La Rioja"));
         }
 
@@ -170,7 +170,7 @@ namespace Personas.FunctionalTests
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromRegion(Comunidad.Aragon.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetFromRegion(AutonomousCommunity.Aragon.ToString(), cantidadSolicitada))
                 .WithApiKeyHeader()
                 .GetAsync();
 
@@ -190,7 +190,7 @@ namespace Personas.FunctionalTests
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetMujeresFromRegion(Comunidad.Castillalamancha.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetMujeresFromRegion(AutonomousCommunity.Castillalamancha.ToString(), cantidadSolicitada))
                 .WithApiKeyHeader()
                 .GetAsync();
 
@@ -200,7 +200,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
-            result.Select(x => x.Sexo.Should().Be(Genero.Female.ToString()));
+            result.Select(x => x.Sexo.Should().Be(Gender.Female.ToString()));
             result.Select(x => x.Origen.Provincia.Should().Be("Castilla - La Mancha"));
         }
 
@@ -212,7 +212,7 @@ namespace Personas.FunctionalTests
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetHombresFromRegion(Comunidad.Galicia.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetHombresFromRegion(AutonomousCommunity.Galicia.ToString(), cantidadSolicitada))
                 .WithApiKeyHeader()
                 .GetAsync();
             var xxx = await response.Content.ReadAsStringAsync();
@@ -222,7 +222,7 @@ namespace Personas.FunctionalTests
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonaViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
-            result.Select(x => x.Sexo.Should().Be(Genero.Male.ToString()));
+            result.Select(x => x.Sexo.Should().Be(Gender.Male.ToString()));
             result.Select(x => x.Origen.Region.Nombre.Should().Be("Galicia"));
         }
 
@@ -232,7 +232,7 @@ namespace Personas.FunctionalTests
         {
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromProvincia(Comunidad.Galicia.ToString(), 100))
+                .CreateRequest(endpoint.GetFromProvincia(AutonomousCommunity.Galicia.ToString(), 100))
                 .WithApiKeyHeader()
                 .GetAsync();
 
@@ -255,7 +255,7 @@ namespace Personas.FunctionalTests
         {
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromRegion(Provincia.Lugo.ToString(), 100))
+                .CreateRequest(endpoint.GetFromRegion(Province.Lugo.ToString(), 100))
                 .WithApiKeyHeader()
                 .GetAsync();
 

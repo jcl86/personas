@@ -2,15 +2,15 @@
 {
     public class RegionViewModel
     {
-        public string Nombre { get; set; }
-        public int Habitantes { get; set; }
-        public int Densidad { get; set; }
-        public string GentilicioMasculino { get; set; }
-        public string GentilicioFemenino { get; set; }
-        public int Superficie { get; set; }
-        public string LenguaOficial { get; set; }
-        public string LenguaCooficial { get; set; }
-        public string Lenguas { get; set; }
-        public string TextoDescriptivo { get; set; }
+        public string Name { get; set; }
+        public int Population { get; set; }
+        public int PopulationDensity { get; set; }
+        public string MaleDemonym { get; set; }
+        public string FemaleDemonym { get; set; }
+        public int Area { get; set; }
+        public string OfficialLanguage { get; set; }
+        public string CoofficialLanguage { get; set; }
+        public string Languages { get; set; }
+        public string Description { get; set; }
     }
 }
