@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Personas.Domain;
-using System;
+using Personas.Shared;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

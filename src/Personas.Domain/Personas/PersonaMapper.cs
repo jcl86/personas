@@ -2,30 +2,30 @@
 
 namespace Personas.Domain
 {
-    public class PersonaMapper
+    public class PersonMapper
     {
-        private readonly Persona persona;
+        private readonly Person persona;
 
-        public PersonaMapper(Persona persona)
+        public PersonMapper(Person persona)
         {
             this.persona = persona;
         }
 
-        public PersonaViewModel Map()
+        public PersonViewModel Map()
         {
-            return new PersonaViewModel()
+            return new PersonViewModel()
             {
-                Nombre = new NameMapper(persona.Nombre).Map(),
-                PrimerApellido = new SurnameMapper(persona.PrimerApellido).Map(),
-                SegundoApellido = new SurnameMapper(persona.SegundoApellido).Map(),
-                NombreCompleto = persona.ToString(),
-                Sexo = persona.Genero.ToString(),
-                Origen = new LugarMapper(persona.Origen).Map(),
-                FechaNacimiento = persona.FechaNacimiento,
-                Dni = persona.Dni,
-                Cultura = persona.Cultura.ToString(),
-                Edad = persona.Edad(),
-                Detalle = persona.Detalle()
+                FirstName = new NameMapper(persona.FirstName).Map(),
+                MiddleName = new SurnameMapper(persona.MiddleName).Map(),
+                LastName = new SurnameMapper(persona.LastName).Map(),
+                CompleteName = persona.ToString(),
+                Gender = persona.Gender.ToString(),
+                Place = new PlaceMapper(persona.Place).Map(),
+                Birthday = persona.BirthDate,
+                IdNumber = persona.IdCardNumber,
+                Culture = persona.Culture.ToString(),
+                Age = persona.Age(),
+                Detail = persona.Detail()
             };
         }
     }

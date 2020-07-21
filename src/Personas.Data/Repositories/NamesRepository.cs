@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Personas.Shared;
 
 namespace Personas.Data.Repositories
 {

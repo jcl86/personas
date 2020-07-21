@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Personas.Shared;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Personas.Domain

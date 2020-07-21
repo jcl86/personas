@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Personas.Domain;
+using Personas.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +31,12 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
-                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<ApellidoViewModel>>(json);
+            var result = JsonConvert.DeserializeObject<IEnumerable<SurnameViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
         }
@@ -49,7 +49,6 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
-                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);

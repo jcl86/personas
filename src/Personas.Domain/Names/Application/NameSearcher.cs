@@ -1,20 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Personas.Shared;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Personas.Domain
 {
-    public class PlaceSearcher
-    {
-        private readonly IPlacesRepository placesRepository;
-private readonly RandomProvider randomProvider;
-
-        public async Task<IEnumerable<Place>> search()
-        {
-
-        }
-
-       
-    }
     public class NameSearcher
     {
         private readonly INamesRepository repository;

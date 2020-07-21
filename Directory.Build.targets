@@ -9,6 +9,8 @@
         <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="3.1.5" />
         <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
         <PackageReference Update="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
+        <PackageReference Update ="Microsoft.AspNet.Identity" Version="3.1.5"  />
+        <PackageReference Update ="Microsoft.AspNet.Identity.EntityFramework" Version="3.1.5"  />
     </ItemGroup>
 
     <ItemGroup Label="Testing">

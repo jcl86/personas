@@ -6,12 +6,12 @@ namespace Personas.Domain
 {
     public class LoginService
     {
-        private readonly IUsersRepository usersRepository;
+        private readonly IUserSignIn userSignIn;
         private readonly ITokenGenerator tokenGenerator;
 
-        public LoginService(IUsersRepository usersRepository, ITokenGenerator tokenGenerator)
+        public LoginService(IUserSignIn userSignIn, ITokenGenerator tokenGenerator)
         {
-            this.usersRepository = usersRepository;
+            this.userSignIn = userSignIn;
             this.tokenGenerator = tokenGenerator;
         }
 
@@ -19,15 +19,15 @@ namespace Personas.Domain
         {
             if (string.IsNullOrWhiteSpace(username))
             {
-                throw new DomainException("usuario no puede estar vacío");
+                throw new DomainException("Usuario no puede estar vacío");
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new DomainException("contraseña no puede estar vacío");
+                throw new DomainException("Contraseña no puede estar vacía");
             }
 
-            var user = await usersRepository.GetUser(username, password);
+            await userSignIn.SignIn(username, password);
 
             if (user == null)
             {

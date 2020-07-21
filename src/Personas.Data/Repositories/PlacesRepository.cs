@@ -10,13 +10,7 @@ namespace Personas.Data.Repositories
 {
     public class PlacesRepository : Repository, IPlacesRepository
     {
-
-        public PlacesRepository(DataContext context) : base(context)
-        {
-            this.randomProvider = randomProvider;
-        }
-
-     
+        public PlacesRepository(DataContext context) : base(context) { }
 
         public async Task<IEnumerable<Place>> GetAllPlaces()
         {
@@ -25,78 +19,47 @@ namespace Personas.Data.Repositories
             var result = new List<Place>();
             foreach (var localidad in localidades)
             {
-                result.Add(CreateLugar(localidad));
+                result.Add(CreatePlace(localidad));
             }
             return result;
         }
 
-        private async Task<IEnumerable<Place>> GetLugares(int numero, Province? provincia = null,
-            AutonomousCommunity? region = null, int idPais = 1)
+        public async Task<List<IEnumerable<Place>>> GetPlaces(Province? province = null, AutonomousCommunity? region = null, int countryId = 1)
         {
-            var localidades = context.Localidades.Where(x => x.Provincias.Regiones.IdPais == idPais);
+            var localidades = context.Localidades.Where(x => x.Provincias.Regiones.IdPais == countryId);
 
             if (region.HasValue)
                 localidades = localidades.Where(x => x.Provincias.IdRegion == (int)region);
 
-            if (provincia.HasValue)
-                localidades = localidades.Where(x => x.IdProvincia == (int)provincia);
+            if (province.HasValue)
+                localidades = localidades.Where(x => x.IdProvincia == (int)province);
 
-            var listaDeListas = new List<IEnumerable<Localidades>>()
+            return new List<IEnumerable<Place>>()
             {
-                await localidades.Metropolies().ToListAsync(),
-                await localidades.BigCities().ToListAsync(),
-                await localidades.BigTowns().ToListAsync(),
-                await localidades.Towns().ToListAsync(),
-                await localidades.Villages().ToListAsync()
+                (await localidades.Where(x => x.Tipo == CityType.Metropoli).IncludeLugares().ToListAsync()).Select(x => CreatePlace(x)),
+                (await localidades.Where(x => x.Tipo == CityType.BigCity).IncludeLugares().ToListAsync()).Select(x => CreatePlace(x)),
+                (await localidades.Where(x => x.Tipo == CityType.BigTown).IncludeLugares().ToListAsync()).Select(x => CreatePlace(x)),
+                (await localidades.Where(x => x.Tipo == CityType.Town).IncludeLugares().ToListAsync()).Select(x => CreatePlace(x)),
+                (await localidades.Where(x => x.Tipo == CityType.Village).IncludeLugares().ToListAsync()).Select(x => CreatePlace(x))
             };
-
-            var removedLists = listaDeListas.RemoveAll(x => !x.Any());
-
-            List<double> distribucion = new List<double>() { 0.45, 0.20, 0.20, 0.10, 0.05 };
-            foreach(int i in Enumerable.Range(0, removedLists))
-            {
-                distribucion.RemoveAt(distribucion.Count - 1);
-            }
-
-            var result = new List<Place>();
-            for (int i = 0; i < distribucion.Count; i++)
-            {
-                for (int j = 0; j < numero * distribucion[i]; j++)
-                {
-                    if (listaDeListas[i].Any())
-                    {
-                        var localidad = listaDeListas[i].RandomElement(randomProvider);
-                        result.Add(CreateLugar(localidad));
-                    }
-                }
-            }
-            return result;
         }
 
-        public async Task<IEnumerable<Place>> GetPlaces(int numero)
-            => await GetLugares(numero, null, null);
-        public async Task<IEnumerable<Place>> GetLugares(int numero, AutonomousCommunity region)
-            => await GetLugares(numero, null, region);
-        public async Task<IEnumerable<Place>> GetLugares(int numero, Province provincia)
-            => await GetLugares(numero, provincia, null);
-
-
-        private Place CreateLugar(Localidades localidad)
+        private Place CreatePlace(Localidades place)
         {
-            var regionBD = localidad.Provincias.Regiones;
-            var idiomaOficial = new Language(regionBD.IdiomaOficial.Id, regionBD.IdiomaOficial.Nombre);
-            Language idiomaCooficial = null;
-            if (regionBD.IdIdiomaCooficial.HasValue)
+            var databaseRegion = place.Provincias.Regiones;
+            var officialLanguage = new Language(databaseRegion.IdiomaOficial.Id, databaseRegion.IdiomaOficial.Nombre);
+            Language coofficialLanguage = null;
+            if (databaseRegion.IdIdiomaCooficial.HasValue)
             {
-                idiomaCooficial = new Language(regionBD.IdiomaCooficial.Id, regionBD.IdiomaCooficial.Nombre);
+                coofficialLanguage = new Language(databaseRegion.IdiomaCooficial.Id, databaseRegion.IdiomaCooficial.Nombre);
             }
-            var region = new Region(regionBD.Id, regionBD.Nombre, regionBD.NumeroHabitantes,
-                regionBD.Densidad, regionBD.GentilicioMasculino, regionBD.GentilicioFemenino,
-                idiomaOficial, idiomaCooficial);
-            return new Place(localidad.Id, localidad.Nombre,
-                localidad.Provincias.NombreProvincia, region, regionBD.Pais.Nombre,
-                localidad.Tipo, localidad.Provincias.GentilicioMasculino,
-                localidad.Provincias.GentilicioFemenino);
+            var region = new Region(databaseRegion.Id, databaseRegion.Nombre, databaseRegion.NumeroHabitantes,
+                databaseRegion.Densidad, databaseRegion.GentilicioMasculino, databaseRegion.GentilicioFemenino,
+                officialLanguage, coofficialLanguage);
+            return new Place(place.Id, place.Nombre,
+                place.Provincias.NombreProvincia, region, databaseRegion.Pais.Nombre,
+                place.Tipo, place.Provincias.GentilicioMasculino,
+                place.Provincias.GentilicioFemenino);
         }
 
     }
@@ -115,20 +78,5 @@ namespace Personas.Data.Repositories
               .ThenInclude(x => x.Regiones)
               .ThenInclude(x => x.IdiomaCooficial);
         }
-
-        public static IQueryable<Localidades> Metropolies(this IQueryable<Localidades> list)
-          => list.Where(x => x.Tipo == CityType.Metropoli).IncludeLugares();
-
-        public static IQueryable<Localidades> BigCities(this IQueryable<Localidades> list)
-          => list.Where(x => x.Tipo == CityType.BigCity).IncludeLugares();
-
-        public static IQueryable<Localidades> BigTowns(this IQueryable<Localidades> list)
-          => list.Where(x => x.Tipo == CityType.BigTown).IncludeLugares();
-
-        public static IQueryable<Localidades> Towns(this IQueryable<Localidades> list)
-          => list.Where(x => x.Tipo == CityType.Town).IncludeLugares();
-
-        public static IQueryable<Localidades> Villages(this IQueryable<Localidades> list)
-          => list.Where(x => x.Tipo == CityType.Village).IncludeLugares();
     }
 }

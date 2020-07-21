@@ -2,11 +2,11 @@
 
 namespace Personas.Domain
 {
-    public class LugarMapper
+    public class PlaceMapper
     {
         private readonly Place lugar;
 
-        public LugarMapper(Place lugar)
+        public PlaceMapper(Place lugar)
         {
             this.lugar = lugar;
         }

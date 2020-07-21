@@ -4,7 +4,7 @@ using System;
 
 namespace Personas.Domain
 {
-    public class DatesProvider : IDatesProvider
+    public class DatesProvider : IDateProvider
     {
         private readonly int yearsMin;
         private readonly int yearsMax;

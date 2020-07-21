@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Personas.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,6 @@ namespace Personas.Domain
             this.femaleDemonym = femaleDemonym;
         }
 
-        
         public string Demonym(Gender gender) => gender.IsMale ? maleDemonym : femaleDemonym;
 
         public override string ToString() => $"{City}, {Region}";

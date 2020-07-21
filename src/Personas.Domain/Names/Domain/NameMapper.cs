@@ -18,7 +18,7 @@ namespace Personas.Domain
                 Name = name.ToString(),
                 MoreThanOneWord = name.MoreThanOneWord,
                 Frecuency = name.Frecuency.Description(),
-                Gender = name.Gender.ToString()
+                Gender = name.Gender
             };
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Personas.Domain
+namespace Personas.Shared
 {
     public enum Frecuency
     {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Personas.Domain;
+using Personas.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +31,12 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
-                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<NombreViewModel>>(json);
+            var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
 
             result.Count().Should().Be(cantidadSolicitada);
         }
@@ -49,16 +49,15 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetMujeres(cantidadSolicitada))
-                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<NombreViewModel>>(json);
+            var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
 
             result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
-            result.All(x => x.Genero.Equals(Gender.Female.ToString())).Should().BeTrue();
+            result.All(x => x.Gender.Equals(Gender.Female.ToString())).Should().BeTrue();
         }
 
         [Fact]
@@ -69,16 +68,15 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetHombres(cantidadSolicitada))
-                .WithApiKeyHeader()
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<NombreViewModel>>(json);
+            var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
 
             result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
-            result.All(x => x.Genero.Equals(Gender.Male.ToString())).Should().BeTrue();
+            result.All(x => x.Gender.Equals(Gender.Male.ToString())).Should().BeTrue();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Personas.Domain
 {
-    public interface IDatesProvider
+    public interface IDateProvider
     {
         int AvaliableMinimunYear { get; }
         int AvaliableMaximunYear { get; }

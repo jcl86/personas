@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Personas.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace Personas.Domain
             this.femaleDemonym = femaleDemonym;
         }
 
-        public int Area => Population / PopulationDensity;        
+        public int Area => Population / PopulationDensity;
 
         public Language OfficialLanguage => languages.First();
         public Language CoofficialLanguage => languages.Count > 1 ? languages[1] : null;

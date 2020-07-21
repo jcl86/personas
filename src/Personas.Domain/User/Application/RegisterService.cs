@@ -4,34 +4,26 @@ namespace Personas.Domain
 {
     public class RegisterService
     {
-        private readonly IUsersRepository usersRepository;
+        private readonly IUserCreator userCreator;
 
-        public RegisterService(IUsersRepository usersRepository)
+        public RegisterService(IUserCreator usercreator)
         {
-            this.usersRepository = usersRepository;
+            this.userCreator = usercreator;
         }
 
-        public async Task<User> Create(string username, string password)
+        public async Task Create(string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(email))
             {
-                throw new DomainException("usuario no puede estar vacío");
+                throw new RegistrationException(email, "Usuario no puede estar vacío");
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new DomainException("contraseña no puede estar vacío");
+                throw new RegistrationException(email, "Contraseña no puede estar vacío");
             }
 
-            bool userAlreadyExists = await usersRepository.UserAlreadyExists(username);
-
-            if (userAlreadyExists)
-            {
-                throw new DomainException($"El usuario {username} ya existe");
-            }
-
-            var user = await usersRepository.CreateUser(username, password);
-            return user;
+            await userCreator.Create(email, password);
         }
     }
 }

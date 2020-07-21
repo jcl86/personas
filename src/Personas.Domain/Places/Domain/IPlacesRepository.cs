@@ -7,7 +7,6 @@ namespace Personas.Domain
     public interface IPlacesRepository
     {
         Task<IEnumerable<Place>> GetAllPlaces();
-        Task<IEnumerable<Place>> GetPlaces(AutonomousCommunity region);
-        Task<IEnumerable<Place>> GetPlaces(Province provincia);
+        Task<List<IEnumerable<Place>>> GetPlaces(Province? provincia, AutonomousCommunity? region, int countryId = 1);
     }
 }

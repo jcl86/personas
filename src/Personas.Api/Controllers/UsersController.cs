@@ -17,9 +17,9 @@ namespace Personas.Api
     [Route("users")]
     public class UsersController : ControllerBase
     {
-        private readonly IUsersRepository usersRepository;
+        private readonly IPasswordChanger usersRepository;
 
-        public UsersController(IUsersRepository usersRepository)
+        public UsersController(IPasswordChanger usersRepository)
         {
             this.usersRepository = usersRepository;
         }

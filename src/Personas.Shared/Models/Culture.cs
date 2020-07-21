@@ -1,4 +1,4 @@
-﻿namespace Personas.Domain
+﻿namespace Personas.Shared
 {
     public enum Culture
     {

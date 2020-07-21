@@ -2,7 +2,7 @@
 
 namespace Personas.Domain
 {
-    public class RandomProvider
+    public class RandomProvider : IRandomProvider
     {
         private readonly Random random;
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Personas.Data.Repositories;
 using System;
+using Personas.Application;
 
 namespace Personas.Api
 {
@@ -17,7 +18,6 @@ namespace Personas.Api
                 .AddApplicationPart(typeof(IServiceCollectionExtensions).Assembly)
                 .Services;
 
-
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<Random>();
@@ -25,9 +25,13 @@ namespace Personas.Api
             services.AddScoped<INamesRepository, NamesRepository>();
             services.AddScoped<ISurnamesRepository, SurnamesRepository>();
             services.AddScoped<IPlacesRepository, PlacesRepository>();
-            services.AddScoped<IDatesProvider, DatesProvider>();
+            services.AddScoped<IPasswordChanger, UsersRepository>();
+            services.AddScoped<IDateProvider, DatesProvider>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<PeopleSearcher>();
+            services.AddScoped<NameSearcher>();
+            services.AddScoped<SurnameSearcher>();
+            services.AddScoped<PlaceSearcher>();
             services.AddScoped<LoginService>();
             services.AddScoped<RegisterService>();
             return services;

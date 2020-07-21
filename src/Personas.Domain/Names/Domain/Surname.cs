@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Personas.Shared;
+using System;
 using System.Collections;
 
 namespace Personas.Domain

@@ -7,9 +7,9 @@ namespace Personas.Domain
         public Guid Id { get; }
         private readonly string username;
 
-        public User(Guid id, string username)
+        public User(string id, string username)
         {
-            this.Id = id;
+            Id = Guid.Parse(id);
             this.username = username;
         }
 

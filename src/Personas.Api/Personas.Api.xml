@@ -13,11 +13,11 @@
             <response code="200">Devuelve el token creado cuando la autenticación es correcta</response>
             <response code="401">Si falla la utenticación</response>   
         </member>
-        <member name="M:Personas.Api.ApellidosController.Get(System.Int32)">
+        <member name="M:Personas.Api.SurnamesController.Get(System.Int32)">
             <summary>
             Obtiene una lista de apellidos
             </summary>
-            <param name="numero">Número de apellidos (mínimo 100)</param>
+            <param name="count">Número de apellidos (mínimo 100)</param>
             <returns></returns>
         </member>
     </members>

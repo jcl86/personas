@@ -28,7 +28,7 @@ namespace Personas.FunctionalTests
         public void Should_check_settings()
         {
             var configuration = Given.Configuration;
-            string apiKeyValue = configuration.GetValue<string>(key: ApiKeyAuthAttribute.ApiKeyConfigurationName);
+            string apiKeyValue = configuration.GetValue<string>(TokenGenerator.ApiKeyConfigurationName);
             apiKeyValue.Should().Be("1234");
         }
 
