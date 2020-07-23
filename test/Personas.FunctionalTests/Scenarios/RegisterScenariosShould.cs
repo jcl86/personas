@@ -65,7 +65,7 @@ namespace Personas.FunctionalTests
                  NewPassword = newPassword
              })
              .PutAsync();
-            response.StatusCode.Should().Be(StatusCodes.Status204NoContent);
+            await response.ShouldBe(StatusCodes.Status204NoContent);
 
             await Given.SuccessToLogin(user.Username(), newPassword);
 
@@ -93,7 +93,7 @@ namespace Personas.FunctionalTests
                  NewPassword = newPassword
              })
              .PutAsync();
-            response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+            await response.ShouldBe(StatusCodes.Status401Unauthorized);
 
             await Given.SuccessToLogin(user.Username(), firstPassword);
 
@@ -119,7 +119,7 @@ namespace Personas.FunctionalTests
                  NewPassword = newPassword
              })
              .PutAsync();
-            response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+            await response.ShouldBe(StatusCodes.Status401Unauthorized);
 
             await Given.SuccessToLogin(user.Username(), password);
         }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
 
 namespace Personas.Data
 {
@@ -15,13 +14,12 @@ namespace Personas.Data
         internal DbSet<Paises> Paises { get; set; }
         internal DbSet<Idiomas> Idiomas { get; set; }
 
-
         public DataContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
-
     }
 }

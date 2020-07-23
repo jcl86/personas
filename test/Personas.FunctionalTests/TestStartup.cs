@@ -29,6 +29,7 @@ namespace Personas.FunctionalTests
                 {
                     setup.UseSqlite(configuration.GetValue<string>("ConnectionString:Sqlite"));
                 })
+                .AddCustomIdentityOptions()
                 .AddAuthentication(options =>
                 {
                     options.DefaultScheme = TestServerDefaults.AuthenticationScheme;

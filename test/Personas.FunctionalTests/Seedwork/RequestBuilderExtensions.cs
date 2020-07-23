@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -33,6 +34,11 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<TModel>(json);
             return result;
+        }
+
+        public static async Task ShouldBe(this HttpResponseMessage response, int statusCode)
+        {
+            response.StatusCode.Should().Be(statusCode, await response.Content.ReadAsStringAsync());
         }
     }
 

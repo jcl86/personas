@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Personas\Infraestructure\" />
-    <Folder Include="Places\Application\" />
   </ItemGroup>
 
 </Project>

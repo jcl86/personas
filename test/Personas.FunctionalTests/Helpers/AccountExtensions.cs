@@ -24,7 +24,7 @@ namespace Personas.FunctionalTests
               })
               .PostAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
             var user = await response.ReadJsonResponse<UserViewModel>();
             user.Username.Should().Be(username);
             return Identities.CreateUser(user.Id, user.Username);
@@ -42,7 +42,7 @@ namespace Personas.FunctionalTests
              })
              .PostAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
             var result = await response.ReadJsonResponse<AuthenticationSuccessResponse>();
             result.Username.Should().Be(username);
             result.Token.Should().NotBeNullOrWhiteSpace();
@@ -60,7 +60,7 @@ namespace Personas.FunctionalTests
              })
              .PostAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+            await response.ShouldBe(StatusCodes.Status401Unauthorized);
             var result = await response.ReadJsonResponse<ProblemDetails>();
             result.Status.Should().Be(StatusCodes.Status401Unauthorized);
         }
