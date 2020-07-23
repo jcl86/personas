@@ -5,14 +5,14 @@ namespace Personas.Domain
     public class User
     {
         public Guid Id { get; }
-        private readonly string username;
+        private readonly UserName username;
 
-        public User(string id, string username)
+        public User(string id, string email)
         {
             Id = Guid.Parse(id);
-            this.username = username;
+            username = new UserName(email);
         }
 
-        public override string ToString() => username;
+        public override string ToString() => username.ToString();
     }
 }

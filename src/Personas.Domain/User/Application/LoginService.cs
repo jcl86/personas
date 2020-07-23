@@ -6,34 +6,30 @@ namespace Personas.Domain
 {
     public class LoginService
     {
+        private readonly IUserRepository userRepository;
         private readonly IUserSignIn userSignIn;
         private readonly ITokenGenerator tokenGenerator;
 
-        public LoginService(IUserSignIn userSignIn, ITokenGenerator tokenGenerator)
+        public LoginService(IUserRepository userRepository, IUserSignIn userSignIn, ITokenGenerator tokenGenerator)
         {
+            this.userRepository = userRepository;
             this.userSignIn = userSignIn;
             this.tokenGenerator = tokenGenerator;
         }
 
-        public async Task<string> GetAuthenticationToken(string username, string password)
+        public async Task<string> GetAuthenticationToken(string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                throw new DomainException("Usuario no puede estar vacío");
-            }
+            var username = new UserName(email);
 
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new DomainException("Contraseña no puede estar vacía");
             }
 
-            await userSignIn.SignIn(username, password);
+            await userSignIn.SignIn(username.ToString(), password);
 
-            if (user == null)
-            {
-                throw new UnauthorizedAccessException("Usuario o contraseña incorrectos");
-            }
-
+            var user = await userRepository.GetUser(username);
+            
             string token = tokenGenerator.GenerateToken(user);
             return token;
         }

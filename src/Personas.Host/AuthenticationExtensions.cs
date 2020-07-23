@@ -30,9 +30,9 @@ namespace Personas.Host
                 {
                     OnTokenValidated = context =>
                     {
-                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IPasswordChanger>();
+                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
                         var userId = Guid.Parse(context.Principal.Identity.Name);
-                        var user = userRepository.GetUserById(userId);
+                        var user = userRepository.GetUser(userId);
                         if (user == null)
                         {
                             context.Fail("Unauthorized");

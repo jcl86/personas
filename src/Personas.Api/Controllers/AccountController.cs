@@ -1,21 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Personas.Domain;
 using Personas.Shared;
+using System;
 using System.Threading.Tasks;
 
 namespace Personas.Api
 {
+    [AllowAnonymous]
     [ApiController]
-    [Route("account")]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
         private readonly LoginService loginService;
         private readonly RegisterService registerService;
+        private readonly PasswordChanger passwordChanger;
 
-        public AccountController(LoginService loginService, RegisterService registerService)
+        public AccountController(LoginService loginService, RegisterService registerService, PasswordChanger passwordChanger)
         {
             this.loginService = loginService;
             this.registerService = registerService;
+            this.passwordChanger = passwordChanger;
         }
 
         /// <summary>
@@ -40,12 +45,21 @@ namespace Personas.Api
         [HttpPost("register")]
         public async Task<ActionResult<UserViewModel>> Register(RegisterModel model)
         {
-            var user = await registerService.Create(model.Username, model.Password);
+            var user = await registerService.CreateUser(model.Username, model.Password);
             return Ok(new UserViewModel()
             {
                 Id = user.Id,
                 Username = user.ToString()
             });
+        }
+
+        [Authorize]
+        [HttpPut("change-password")]
+        public async Task<IActionResult> UpdatePassword(ChangePasswordModel model)
+        {
+            var currentUser = Guid.Parse(User.GetUserId());
+            await passwordChanger.Change(currentUser, model.Email, model.CurrentPassword, model.NewPassword);
+            return NoContent();
         }
     }
 }

@@ -14,12 +14,12 @@ namespace Personas.Api
 {
     [Authorize(Policies.Administrator)]
     [ApiController]
-    [Route("users")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly IPasswordChanger usersRepository;
+        private readonly IUserRepository usersRepository;
 
-        public UsersController(IPasswordChanger usersRepository)
+        public UsersController(IUserRepository usersRepository)
         {
             this.usersRepository = usersRepository;
         }
@@ -34,15 +34,8 @@ namespace Personas.Api
         [HttpGet("{id}")]
         public async Task<ActionResult<UserViewModel>> GetById(Guid id)
         {
-            var entity = await usersRepository.GetUserById(id);
+            var entity = await usersRepository.GetUser(id);
             return Ok(Map(entity));
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePassword(Guid id, UpdateModel model)
-        {
-            await usersRepository.UpdatePassword(id, model.NewPassword);
-            return NoContent();
         }
 
         [HttpDelete("{id}")]

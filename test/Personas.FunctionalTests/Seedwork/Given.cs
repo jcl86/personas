@@ -1,5 +1,6 @@
 ﻿namespace Personas.FunctionalTests
 {
+
     public class Given
     {
         private readonly ServerFixture _serverFixture;

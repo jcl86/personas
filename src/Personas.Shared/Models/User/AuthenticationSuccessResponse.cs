@@ -1,4 +1,6 @@
-﻿namespace Personas.Shared
+﻿using System;
+
+namespace Personas.Shared
 {
     public class AuthenticationSuccessResponse
     {

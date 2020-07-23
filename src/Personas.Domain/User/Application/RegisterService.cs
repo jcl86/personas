@@ -4,26 +4,26 @@ namespace Personas.Domain
 {
     public class RegisterService
     {
-        private readonly IUserCreator userCreator;
+        private readonly IUserRepository userRepository;
 
-        public RegisterService(IUserCreator usercreator)
+        public RegisterService(IUserRepository userRepository)
         {
-            this.userCreator = usercreator;
+            this.userRepository = userRepository;
         }
 
-        public async Task Create(string email, string password)
+        public async Task<User> CreateUser(string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                throw new RegistrationException(email, "Usuario no puede estar vacío");
-            }
+            var username = new UserName(email);
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new RegistrationException(email, "Contraseña no puede estar vacío");
+                throw new RegistrationException(username, "Password can not be empty");
             }
 
-            await userCreator.Create(email, password);
+            await userRepository.Create(username, password);
+
+            var createdUser = await userRepository.GetUser(username);
+            return createdUser;
         }
     }
 }

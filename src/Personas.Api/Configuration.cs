@@ -32,13 +32,9 @@ namespace Personas.Api
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapControllerRoute(
-                     name: "default",
-                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapGet("/", async context =>
-                    {
-                        await context.Response.WriteAsync($"Welcome to Personas API from {Environment.MachineName}");
-                    });
+                     endpoints.MapControllerRoute(
+                         name: "default",
+                         pattern: "{controller=Home}/{action=Index}/{id?}");
                 });
         }
     }

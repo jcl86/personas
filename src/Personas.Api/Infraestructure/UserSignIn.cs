@@ -6,35 +6,6 @@ using System.Threading.Tasks;
 
 namespace Personas.Api
 {
-    public class UserRepository : IUserRepository
-    {
-        private readonly UserManager<Data.User> userManager;
-
-        public UserRepository(UserManager<Data.User> userManager)
-        {
-            this.userManager = userManager;
-        }
-
-        public async Task<User> GetUserById(Guid idUser)
-        {
-            var user = await userManager.FindByIdAsync(idUser.ToString());
-            return Map(user);
-        }
-
-        public async Task UpdatePassword(Guid idUser, string currentPassword, string newPassword)
-        {
-            var user = await userManager.FindByIdAsync(idUser.ToString());
-            var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
-            if (result.)
-        }
-
-        public Task DeleteUser(Guid idUser)
-        {
-            userManager.DeleteAsync();
-        }
-
-        private User Map(Data.User user) => new User(user.Id, user.UserName);
-    }
     public class UserSignIn : IUserSignIn
     {
         private readonly SignInManager<Data.User> signInManager;

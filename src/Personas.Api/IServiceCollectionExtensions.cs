@@ -25,8 +25,9 @@ namespace Personas.Api
             services.AddScoped<INamesRepository, NamesRepository>();
             services.AddScoped<ISurnamesRepository, SurnamesRepository>();
             services.AddScoped<IPlacesRepository, PlacesRepository>();
-            services.AddScoped<IPasswordChanger, UsersRepository>();
-            services.AddScoped<IDateProvider, DatesProvider>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserSignIn, UserSignIn>();
+            services.AddScoped<IDateProvider, DateProvider>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<PeopleSearcher>();
             services.AddScoped<NameSearcher>();
@@ -56,6 +57,13 @@ namespace Personas.Api
                         Detail = exception.StackTrace,
                         Status = StatusCodes.Status403Forbidden,
                         Type = nameof(AccessForbidenException)
+                    });
+                    configure.Map<NotFoundException>(exception => new ProblemDetails()
+                    {
+                        Title = exception.Message,
+                        Detail = exception.StackTrace,
+                        Status = StatusCodes.Status404NotFound,
+                        Type = nameof(NotFoundException)
                     });
                     configure.Map<QuantityUnderHundredException>(exception => new ProblemDetails()
                     {

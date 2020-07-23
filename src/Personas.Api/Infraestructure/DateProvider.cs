@@ -4,12 +4,12 @@ using System;
 
 namespace Personas.Domain
 {
-    public class DatesProvider : IDateProvider
+    public class DateProvider : IDateProvider
     {
         private readonly int yearsMin;
         private readonly int yearsMax;
 
-        public DatesProvider(IConfiguration configuration)
+        public DateProvider(IConfiguration configuration)
         {
             yearsMin = configuration.GetValue<int>("DateSettings:YearsMin");
             yearsMax = configuration.GetValue<int>("DateSettings:YearsMax");

@@ -24,18 +24,21 @@ namespace Personas.FunctionalTests
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Api.Configuration.ConfigureServices(services, environment)
+            Configuration.ConfigureServices(services, environment)
                 .AddDbContext<DataContext>(setup =>
                 {
                     setup.UseSqlite(configuration.GetValue<string>("ConnectionString:Sqlite"));
                 })
-                .AddAuthentication()
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = TestServerDefaults.AuthenticationScheme;
+                })
                 .AddTestServer();
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            Api.Configuration.Configure(app, host => host);
+            Configuration.Configure(app, host => host);
         }
     }
 }
