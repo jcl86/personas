@@ -45,6 +45,10 @@ namespace Personas.Infraestructure
             var client = new SendGridClient(apiKey.ApiKey);
             message.AddTo(new EmailAddress(recipient.ToString()));
             var response = await client.SendEmailAsync(message);
+            if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+            {
+                throw new EmailException();
+            }
         }
     }
 }

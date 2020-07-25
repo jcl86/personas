@@ -1,4 +1,4 @@
-﻿namespace Personas.Shared
+﻿namespace Personas.Domain
 {
     public class Gender
     {

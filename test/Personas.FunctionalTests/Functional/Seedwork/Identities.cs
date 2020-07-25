@@ -11,7 +11,7 @@ namespace Personas.FunctionalTests
         {
             new Claim(ClaimTypes.NameIdentifier, "1"),
             new Claim(ClaimTypes.Name, "admin@user.com"),
-            new Claim(ClaimTypes.Role, "Administrator"),
+            new Claim(ClaimTypes.Role, Data.Roles.Administrator),
         };
 
         public static readonly IEnumerable<Claim> OneUser = new[]

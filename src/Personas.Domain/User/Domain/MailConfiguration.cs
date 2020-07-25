@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Personas.Data
+namespace Personas.Domain
 {
     public class MailConfiguration
     {
-        public SendGridCredentials SendGripApiKey { get; set; }
+        public SendGridCredentials SendGridCredentials { get; set; }
         public IEnumerable<string> Suscribers { get; set; }
     }
 }

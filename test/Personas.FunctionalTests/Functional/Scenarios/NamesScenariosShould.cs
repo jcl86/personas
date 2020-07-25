@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Personas.Domain;
 using Personas.Shared;
@@ -30,6 +31,7 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);

@@ -1,4 +1,5 @@
 ﻿using Personas.Shared;
+using System;
 
 namespace Personas.Domain
 {

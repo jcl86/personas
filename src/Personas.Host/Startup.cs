@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Personas.Data;
 
 namespace Personas.Host
 {
@@ -29,7 +30,7 @@ namespace Personas.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Api.Configuration.ConfigureServices(services, environment)
+            Api.Configuration.ConfigureServices(services, environment, Configuration)
              .AddSqlite(Configuration)
              .AddCustomAuthentication(Configuration, environment)
              .AddSwaggerGen(c =>
@@ -56,12 +57,11 @@ namespace Personas.Host
               });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ApplicationInitializer initializer)
         {
             Api.Configuration.Configure(app, host =>
             {
                 return host
-                    //.UseDeveloperExceptionPage() //Para depurar errores en pro
                     .UseDefaultFiles()
                     .UseStaticFiles()
                     .UseSwagger()
@@ -70,7 +70,7 @@ namespace Personas.Host
                         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Personas V1");
                         c.RoutePrefix = "";
                     });
-            });
+            }, initializer);
         }
     }
 }

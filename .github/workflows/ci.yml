@@ -37,7 +37,11 @@ jobs:
         files: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/app/appsettings.json'
       env:
         ApiKey: "${{ secrets.API_KEY }}"
-    
+        MailConfiguration.SendGridCredentials.ApiKey : "${{ secrets.SENDGRID_API_KEY }}"
+        MailConfiguration.Suscribers : "${{ secrets.SENDGRID_API_KEY }}"
+        UsersConfiguration.DefaultAdministrator.Username : "${{ secrets.DEFAULT_ADMIN_USERNAME }}"
+        UsersConfiguration.DefaultAdministrator.Password : "${{ secrets.DEFAULT_ADMIN_PASSWORD }}"
+
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2.1
       with:

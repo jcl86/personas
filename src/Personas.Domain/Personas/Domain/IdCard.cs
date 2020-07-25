@@ -2,19 +2,19 @@
 
 namespace Personas.Domain
 {
-    public class Dni
+    public class IdCard
     {
         public int Number { get; }
 
-        public Dni(IRandomProvider randomProvider)
+        public IdCard(IRandomProvider randomProvider)
         {
             foreach (var i in Enumerable.Range(0, 8))
                 Number += randomProvider.GetNumber(0, 9) * (int)System.Math.Pow(10, i);
         }
 
-        public override string ToString() => $"{Number}{GetLetra()}";
+        public override string ToString() => $"{Number}{GetLetter()}";
 
-        private char GetLetra()
+        private char GetLetter()
         {
             return (Number % 23) switch
             {

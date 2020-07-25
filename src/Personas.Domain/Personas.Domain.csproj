@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Personas.Shared\Personas.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Personas\Infraestructure\" />
-  </ItemGroup>
-
 </Project>

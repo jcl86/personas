@@ -1,4 +1,4 @@
-﻿namespace Personas.Data
+﻿namespace Personas.Domain
 {
     public class SendGridCredentials
     {

@@ -8,6 +8,7 @@ using Acheve.AspNetCore.TestHost.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.TestHost;
 using Acheve.TestHost;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Personas.FunctionalTests
 {
@@ -24,7 +25,7 @@ namespace Personas.FunctionalTests
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.ConfigureServices(services, environment)
+            Configuration.ConfigureServices(services, environment, configuration)
                 .AddDbContext<DataContext>(setup =>
                 {
                     setup.UseSqlite(configuration.GetValue<string>("ConnectionString:Sqlite"));
@@ -37,9 +38,9 @@ namespace Personas.FunctionalTests
                 .AddTestServer();
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ApplicationInitializer initializer)
         {
-            Configuration.Configure(app, host => host);
+            Configuration.Configure(app, host => host, initializer);
         }
     }
 }

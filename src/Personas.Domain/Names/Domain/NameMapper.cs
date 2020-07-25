@@ -1,4 +1,5 @@
 ﻿using Personas.Shared;
+using System;
 
 namespace Personas.Domain
 {
@@ -18,7 +19,7 @@ namespace Personas.Domain
                 Name = name.ToString(),
                 MoreThanOneWord = name.MoreThanOneWord,
                 Frecuency = name.Frecuency.Description(),
-                Gender = name.Gender
+                Gender = name.Gender.ToString()
             };
         }
     }

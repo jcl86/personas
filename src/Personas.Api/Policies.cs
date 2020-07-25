@@ -13,7 +13,7 @@ namespace Personas.Api
             options.AddPolicy(Administrator, policyBuilder =>
             {
                 policyBuilder.RequireAuthenticatedUser();
-                policyBuilder.RequireUserName("admin");
+                policyBuilder.RequireRole(Data.Roles.Administrator);
             });
         }
     }

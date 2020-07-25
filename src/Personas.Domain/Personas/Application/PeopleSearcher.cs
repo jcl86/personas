@@ -50,7 +50,7 @@ namespace Personas.Domain
 
                 var birthDate = dateProvider.GetRandomBirthDate(randomProvider);
 
-                var idCardNumber = new Dni(randomProvider).ToString();
+                var idCardNumber = new IdCard(randomProvider).ToString();
 
                 people.Add(new Person(firstName, middleName, lastName, gender,
                     place, birthDate, idCardNumber));
