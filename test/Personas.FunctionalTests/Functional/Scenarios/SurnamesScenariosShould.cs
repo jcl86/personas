@@ -12,37 +12,37 @@ using Xunit;
 namespace Personas.FunctionalTests
 {
     [Collection(nameof(ServerFixtureCollection))]
-    public class ApellidosScenarios
+    public class SurnamesScenariosShould
     {
         private readonly ServerFixture Given;
-        private readonly ApellidosEndpoint endpoint;
+        private readonly SurnamesEndpoint endpoint;
 
-        public ApellidosScenarios(ServerFixture fixture)
+        public SurnamesScenariosShould(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
-            endpoint = Endpoint.Apellidos;
+            endpoint = Endpoints.Surnames;
         }
 
         [Fact]
-        public async Task Should_obtain_100_apellidos()
+        public async Task Obtain_100_apellidos()
         {
-            int cantidadSolicitada = 100;
+            int quantity = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(quantity))
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<SurnameViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(quantity);
         }
 
         [Fact]
-        public async Task Should_not_allow_to_obtain_less_than_100()
+        public async Task Fail_to_obtain_less_than_100()
         {
             int cantidadSolicitada = 90;
 
@@ -51,11 +51,11 @@ namespace Personas.FunctionalTests
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+            await response.ShouldBe(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
-        public async Task Should_not_allow_to_obtain_requests_without_api_key()
+        public async Task Fail_to_obtain_requests_without_api_key()
         {
             int cantidadSolicitada = 100;
 
@@ -64,7 +64,7 @@ namespace Personas.FunctionalTests
                 .CreateRequest(endpoint.Get(cantidadSolicitada))
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+            await response.ShouldBe(StatusCodes.Status401Unauthorized);
         }
     }
 }

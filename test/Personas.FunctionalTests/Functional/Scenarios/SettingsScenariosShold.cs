@@ -15,11 +15,11 @@ using System.Diagnostics;
 namespace Personas.FunctionalTests
 {
     [Collection(nameof(ServerFixtureCollection))]
-    public class SettingsScenarios
+    public class SettingsScenariosShold
     {
         private readonly ServerFixture Given;
 
-        public SettingsScenarios(ServerFixture fixture)
+        public SettingsScenariosShold(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
         }

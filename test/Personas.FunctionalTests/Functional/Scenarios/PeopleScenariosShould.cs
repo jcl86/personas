@@ -12,25 +12,24 @@ using Xunit;
 namespace Personas.FunctionalTests
 {
     [Collection(nameof(ServerFixtureCollection))]
-    public class PersonasScenarios
+    public class PeopleScenariosShould
     {
         private readonly ServerFixture Given;
-        private readonly PersonasEndpoint endpoint;
+        private readonly PeopleEndpoint endpoint = Endpoints.People;
 
-        public PersonasScenarios(ServerFixture fixture)
+        public PeopleScenariosShould(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
-            endpoint = Endpoint.Personas;
         }
 
         [Fact]
-        public async Task Should_obtain_253_personas()
+        public async Task Obtain_253_people()
         {
-            int cantidadSolicitada = 253;
+            int requestedQuantity = 253;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -38,17 +37,17 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
         }
 
         [Fact]
-        public async Task Should_obtain_3000_personas()
+        public async Task Obtain_3000_people()
         {
-            int cantidadSolicitada = 3000;
+            int requestedQuantity = 3000;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -56,17 +55,17 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
         }
 
         [Fact]
-        public async Task Should_obtain_140_mujeres()
+        public async Task Obtain_140_women()
         {
-            int cantidadSolicitada = 140;
+            int requestedQuantity = 140;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetMujeres(cantidadSolicitada))
+                .CreateRequest(endpoint.GetWomen(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -74,18 +73,18 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Female.ToString()));
         }
 
         [Fact]
-        public async Task Should_obtain_210_hombres()
+        public async Task Obtain_210_men()
         {
-            int cantidadSolicitada = 210;
+            int requestedQuantity = 210;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetHombres(cantidadSolicitada))
+                .CreateRequest(endpoint.GetMen(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -93,18 +92,18 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Male.ToString()));
         }
 
         [Fact]
-        public async Task Should_obtain_100_tarraconenses()
+        public async Task Obtain_100_people_from_Tarragona()
         {
-            int cantidadSolicitada = 100;
+            int requestedQuantity = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromProvincia(Province.Tarragona.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetFromProvince(Province.Tarragona.ToString(), requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -112,18 +111,18 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Place.Province.Should().Be("Tarragona"));
         }
 
         [Fact]
-        public async Task Should_obtain_340_mujeres_gipuzkoanas()
+        public async Task Obtain_340_women_from_Gipuzkoa()
         {
-            int cantidadSolicitada = 340;
+            int requestedQuantity = 340;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetMujeresFromProvincia(Province.Gipuzkoa.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetWomenFromProvince(Province.Gipuzkoa.ToString(), requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -131,20 +130,20 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Female.ToString()));
             result.Select(x => x.Place.Province.Should().Be("Gipuzkoa"));
         }
 
 
         [Fact]
-        public async Task Should_obtain_100_hombres_riojanos()
+        public async Task Obtain_100_men_from_La_rioja()
         {
-            int cantidadSolicitada = 100;
+            int requestedQuantity = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetHombres(cantidadSolicitada))
+                .CreateRequest(endpoint.GetMen(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -152,19 +151,19 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Male.ToString()));
             result.Select(x => x.Place.Province.Should().Be("La Rioja"));
         }
 
         [Fact]
-        public async Task Should_obtain_150_aragoneses()
+        public async Task Obtain_150_people_from_Aragon()
         {
-            int cantidadSolicitada = 150;
+            int requestedQuantity = 150;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromRegion(AutonomousCommunity.Aragon.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetFromRegion(AutonomousCommunity.Aragon.ToString(), requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -172,18 +171,18 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Place.Region.Name.Should().Be("Aragón"));
         }
 
         [Fact]
-        public async Task Should_obtain_220_mujeres_manchegas()
+        public async Task Obtain_220_women_from_La_Mancha()
         {
-            int cantidadSolicitada = 220;
+            int requestedQuantity = 220;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetMujeresFromRegion(AutonomousCommunity.Castillalamancha.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetWomenFromRegion(AutonomousCommunity.Castillalamancha.ToString(), requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -191,19 +190,19 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Female.ToString()));
             result.Select(x => x.Place.Province.Should().Be("Castilla - La Mancha"));
         }
 
         [Fact]
-        public async Task Should_obtain_400_hombres_gallegos()
+        public async Task Obtain_400_men_from_Galicia()
         {
-            int cantidadSolicitada = 400;
+            int requestedQuantity = 400;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetHombresFromRegion(AutonomousCommunity.Galicia.ToString(), cantidadSolicitada))
+                .CreateRequest(endpoint.GetMenFromRegion(AutonomousCommunity.Galicia.ToString(), requestedQuantity))
                 .GetAsync();
             var xxx = await response.Content.ReadAsStringAsync();
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -211,25 +210,25 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Male.ToString()));
             result.Select(x => x.Place.Region.Name.Should().Be("Galicia"));
         }
 
 
         [Fact]
-        public async Task Should_not_find_provincia()
+        public async Task Should_not_find_province()
         {
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromProvincia(AutonomousCommunity.Galicia.ToString(), 100))
+                .CreateRequest(endpoint.GetFromProvince(AutonomousCommunity.Galicia.ToString(), 100))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
 
             response = await Given
             .Server
-            .CreateRequest(endpoint.GetFromProvincia("wrongProvince", 100))
+            .CreateRequest(endpoint.GetFromProvince("wrongProvince", 100))
             .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status404NotFound);

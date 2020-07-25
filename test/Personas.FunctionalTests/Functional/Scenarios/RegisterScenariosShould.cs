@@ -10,11 +10,11 @@ using Xunit;
 namespace Personas.FunctionalTests
 {
     [Collection(nameof(ServerFixtureCollection))]
-    public class RegisterScenariosShould
+    public class AccountScenariosShould
     {
         private readonly ServerFixture Given;
 
-        public RegisterScenariosShould(ServerFixture fixture)
+        public AccountScenariosShould(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
         }
@@ -42,7 +42,7 @@ namespace Personas.FunctionalTests
             string wrongPassword = Guid.NewGuid().ToString();
             var user = await Given.RegisterUser(goodPassword);
 
-            await Given.SuccessToLogin(user.Username(), wrongPassword);
+            await Given.FailToLogin(user.Username(), wrongPassword);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace Personas.FunctionalTests
                  NewPassword = newPassword
              })
              .PutAsync();
-            await response.ShouldBe(StatusCodes.Status401Unauthorized);
+            await response.ShouldBe(StatusCodes.Status400BadRequest);
 
             await Given.SuccessToLogin(user.Username(), firstPassword);
 

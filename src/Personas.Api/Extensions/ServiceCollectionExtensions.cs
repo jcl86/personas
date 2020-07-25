@@ -5,10 +5,11 @@ using System;
 using Personas.Application;
 using Microsoft.AspNetCore.Identity;
 using Personas.Api;
+using Personas.Data;
+using Personas.Infraestructure;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCustomMvc(this IServiceCollection services) =>
@@ -28,6 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IUserSignIn, UserSignIn>();
             services.AddScoped<IDateProvider, DateProvider>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<PeopleSearcher>();
             services.AddScoped<NameSearcher>();
             services.AddScoped<SurnameSearcher>();
@@ -38,4 +40,6 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
     }
+
+
 }

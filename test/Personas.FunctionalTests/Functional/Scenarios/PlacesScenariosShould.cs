@@ -12,25 +12,24 @@ using Xunit;
 namespace Personas.FunctionalTests
 {
     [Collection(nameof(ServerFixtureCollection))]
-    public class LugaresScenarios
+    public class PlacesScenariosShould
     {
         private readonly ServerFixture Given;
-        private readonly LugaresEndpoint endpoint;
+        private readonly PlacesEndpoint endpoint = Endpoints.Places;
 
-        public LugaresScenarios(ServerFixture fixture)
+        public PlacesScenariosShould(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
-            endpoint = Endpoint.Lugares;
         }
 
         [Fact]
-        public async Task Should_obtain_500_lugares()
+        public async Task Obtain_500_places()
         {
-            int cantidadSolicitada = 500;
+            int requestedQuantity = 500;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -38,17 +37,17 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PlaceViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
         }
 
         [Fact]
-        public async Task Should_obtain_40_lugares_from_murcia()
+        public async Task Obtain_40_places_from_Murcia()
         {
-            int cantidadSolicitada = 40;
+            int requestedQuantity = 40;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromProvincia("murcia", cantidadSolicitada))
+                .CreateRequest(endpoint.GetFromProvincia("murcia", requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -56,18 +55,18 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PlaceViewModel>>(json);
 
-            result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
+            result.Count().Should().BeInRange(requestedQuantity - 10, requestedQuantity + 10);
             result.All(x => x.Province.Equals("Murcia")).Should().BeTrue();
         }
 
         [Fact]
-        public async Task Should_obtain_81_lugares_from_la_mancha()
+        public async Task Obtain_81_lugares_from_La_Mancha()
         {
-            int cantidadSolicitada = 81;
+            int requestedQuantity = 81;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetFromRegion("castillaLaMancha", cantidadSolicitada))
+                .CreateRequest(endpoint.GetFromRegion("castillaLaMancha", requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -75,7 +74,7 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PlaceViewModel>>(json);
 
-            result.Count().Should().BeInRange(cantidadSolicitada - 20, cantidadSolicitada + 20);
+            result.Count().Should().BeInRange(requestedQuantity - 20, requestedQuantity + 20);
             result.All(x => x.Region.Name.Equals("Castilla - La Mancha")).Should().BeTrue();
         }
     }

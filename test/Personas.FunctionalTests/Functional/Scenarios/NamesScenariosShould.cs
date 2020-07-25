@@ -12,25 +12,24 @@ using Xunit;
 namespace Personas.FunctionalTests
 {
     [Collection(nameof(ServerFixtureCollection))]
-    public class NombresScenarios
+    public class NamesScenariosShould
     {
         private readonly ServerFixture Given;
-        private readonly NombresEndpoint endpoint;
+        private readonly NamesEndpoint endpoint = Endpoints.Names;
 
-        public NombresScenarios(ServerFixture fixture)
+        public NamesScenariosShould(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
-            endpoint = Endpoint.Nombres;
         }
 
         [Fact]
-        public async Task Should_obtain_100_nombres()
+        public async Task Obtain_100_names()
         {
-            int cantidadSolicitada = 100;
+            int requestedQuantity = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -38,17 +37,17 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
 
-            result.Count().Should().Be(cantidadSolicitada);
+            result.Count().Should().Be(requestedQuantity);
         }
 
         [Fact]
-        public async Task Should_obtain_120_nombres_femeninos()
+        public async Task Obtain_120_female_names()
         {
-            int cantidadSolicitada = 120;
+            int requestedQuantity = 120;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetMujeres(cantidadSolicitada))
+                .CreateRequest(endpoint.GetMujeres(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -56,18 +55,18 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
 
-            result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
+            result.Count().Should().BeInRange(requestedQuantity - 10, requestedQuantity + 10);
             result.All(x => x.Gender.Equals(Gender.Female.ToString())).Should().BeTrue();
         }
 
         [Fact]
-        public async Task Should_obtain_114_nombres_masculinos()
+        public async Task Obtain_114_male_names()
         {
-            int cantidadSolicitada = 114;
+            int requestedQuantity = 114;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.GetHombres(cantidadSolicitada))
+                .CreateRequest(endpoint.GetHombres(requestedQuantity))
                 .GetAsync();
 
             response.StatusCode.Should().Be(StatusCodes.Status200OK);
@@ -75,7 +74,7 @@ namespace Personas.FunctionalTests
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
 
-            result.Count().Should().BeInRange(cantidadSolicitada - 10, cantidadSolicitada + 10);
+            result.Count().Should().BeInRange(requestedQuantity - 10, requestedQuantity + 10);
             result.All(x => x.Gender.Equals(Gender.Male.ToString())).Should().BeTrue();
         }
     }
