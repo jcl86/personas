@@ -1,5 +1,4 @@
 ﻿using Personas.Shared;
-using System;
 using System.Threading.Tasks;
 
 namespace Personas.Domain

@@ -29,10 +29,10 @@ namespace Personas.FunctionalTests
         {
             var configuration = Given.Configuration;
             string apiKeyValue = configuration.GetValue<string>(TokenGenerator.ApiKeyConfigurationName);
-            apiKeyValue.Should().Be("1234");
+            apiKeyValue.Should().Be("1234567890abcdefhijklmnopqrstuvwxyz12345");
         }
 
-        [Fact]
+        [Fact(Skip ="Not neccesary")]
         public void Create_super_secure_password()
         {
             var randomProvider = new RandomProvider(new Random());

@@ -24,18 +24,18 @@ namespace Personas.IntegrationTests
             mailConfiguration = Given.Server.Services.GetService<MailConfiguration>();
         }
 
-        [Fact]
+        [Fact(Skip = "To send test email, inform Suscribers in secrets.json")]
         public async Task Send_email_with_plain_content()
         {
             var emailSender = new EmailSender(mailConfiguration.SendGridCredentials);
             await emailSender.SendPlainBody(new Domain.UserName(mailConfiguration.Suscribers.First()), "Testing", "This is plain content test");
         }
 
-        [Fact]
+        [Fact(Skip = "To send test email, inform Suscribers in secrets.json")]
         public async Task Send_email_with_html_content()
         {
             var emailSender = new EmailSender(mailConfiguration.SendGridCredentials);
-            await emailSender.SendHtmlBody(new Domain.UserName(mailConfiguration.Suscribers.First()), "Testing", "<strong>This is html content test</strong>");
+            await emailSender.SendHtmlBody(new UserName(mailConfiguration.Suscribers.First()), "Testing", "<strong>This is html content test</strong>");
         }
     }
 }

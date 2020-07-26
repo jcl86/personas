@@ -33,12 +33,9 @@ namespace Personas.FunctionalTests
                 .CreateRequest(endpoint.Get(requestedQuantity))
                 .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<NameViewModel>>();
             result.Count().Should().Be(requestedQuantity);
         }
 
@@ -50,13 +47,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetMujeres(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<NameViewModel>>();
             result.Count().Should().BeInRange(requestedQuantity - 10, requestedQuantity + 10);
             result.All(x => x.Gender.Equals(Gender.Female.ToString())).Should().BeTrue();
         }
@@ -69,13 +64,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetHombres(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<NameViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<NameViewModel>>();
             result.Count().Should().BeInRange(requestedQuantity - 10, requestedQuantity + 10);
             result.All(x => x.Gender.Equals(Gender.Male.ToString())).Should().BeTrue();
         }

@@ -15,11 +15,11 @@ namespace Personas.Domain
             this.mailConfiguration = mailConfiguration;
         }
 
-        public async Task Notify(NotificationType type, string text)
+        public async Task Notify(string type, string text)
         {
             foreach (var email in mailConfiguration.Suscribers.Where(x => !x.IsEmpty()))
             {
-                await emailSender.SendPlainBody(new UserName(email), type.ToString(), text);
+                await emailSender.SendPlainBody(new UserName(email), type, text);
             }
         }
     }

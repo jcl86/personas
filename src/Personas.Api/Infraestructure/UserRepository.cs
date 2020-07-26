@@ -26,12 +26,20 @@ namespace Personas.Api
         public async Task<User> GetUser(Guid idUser)
         {
             var user = await userManager.FindByIdAsync(idUser.ToString());
+            if (user is null)
+            {
+                return null;
+            }
             return Map(user);
         }
 
         public async Task<User> GetUser(UserName email)
         {
             var user = await userManager.FindByEmailAsync(email.ToString());
+            if (user is null)
+            {
+                return null;
+            }
             return Map(user);
         }
 
@@ -65,7 +73,5 @@ namespace Personas.Api
         }
 
         private User Map(Data.User user) => new User(user.Id, user.UserName);
-
-      
     }
 }

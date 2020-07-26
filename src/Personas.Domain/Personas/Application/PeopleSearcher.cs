@@ -27,10 +27,10 @@ namespace Personas.Domain
 
         public async Task<IEnumerable<Person>> SearchPeople(int quantity, Province? province = null, AutonomousCommunity? region = null, Gender gender = null)
         {
-            quantity.EnsureQuantityIsEqualOrHigerThan100();
+            quantity.EnsureQuantityIsInValidRange();
 
             var names = (await nameSearcher.Search(quantity, gender)).ToList();
-            var surnames = (await surnameSearcher.Search(quantity)).ToList();
+            var surnames = (await surnameSearcher.Search(quantity * 2)).ToList();
             var places = (await placeSearcher.Search(quantity, province, region)).ToList();
 
             var people = new List<Person>();
@@ -52,7 +52,7 @@ namespace Personas.Domain
 
                 var idCardNumber = new IdCard(randomProvider).ToString();
 
-                people.Add(new Person(firstName, middleName, lastName, gender,
+                people.Add(new Person(firstName, middleName, lastName, gender ?? firstName.Gender,
                     place, birthDate, idCardNumber));
             }
             return people;

@@ -39,6 +39,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<LoginService>();
             services.AddScoped<RegisterService>();
             services.AddScoped<PasswordChanger>();
+            services.AddScoped<UserFinder>();
+            services.AddScoped<UserEraser>();
             return services;
         }
     }

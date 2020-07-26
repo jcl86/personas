@@ -32,7 +32,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("men/{numero:int}")]
+        [HttpGet, Route("men/{quantity:int}")]
         public async Task<IActionResult> GetMen(int quantity = 100)
         {
             var personas = await searcher.SearchPeople(quantity, null, null, Gender.Male);
@@ -78,7 +78,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("province({province})/women/{quantity:int}")]
+        [HttpGet, Route("province({province})/men/{quantity:int}")]
         public async Task<IActionResult> GetMenFromProvince(string province, int quantity = 100)
         {
             var convertedProvince = new EnumConverter<Province>(province).Convert();
@@ -86,7 +86,7 @@ namespace Personas.Api
             return Ok(Map(personas));
         }
 
-        [HttpGet, Route("province({provincia})/women/{quantity:int}")]
+        [HttpGet, Route("province({province})/women/{quantity:int}")]
         public async Task<IActionResult> GetWomenFromProvince(string province, int quantity = 100)
         {
             var convertedProvince = new EnumConverter<Province>(province).Convert();

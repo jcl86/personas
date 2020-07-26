@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Personas.Domain;
 using Personas.Shared;
@@ -26,42 +27,41 @@ namespace Personas.FunctionalTests
         [Fact]
         public async Task Obtain_100_apellidos()
         {
-            int quantity = 100;
+            int requestedQuantity = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(quantity))
+                .CreateRequest(endpoint.Get(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
-
             await response.ShouldBe(StatusCodes.Status200OK);
 
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<SurnameViewModel>>(json);
-
-            result.Count().Should().Be(quantity);
+            var result = await response.ReadJsonResponse<IEnumerable<SurnameViewModel>>();
+            result.Count().Should().Be(requestedQuantity);
         }
 
         [Fact]
         public async Task Fail_to_obtain_less_than_100()
         {
-            int cantidadSolicitada = 90;
+            int requestedQuantity = 90;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
 
             await response.ShouldBe(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
-        public async Task Fail_to_obtain_requests_without_api_key()
+        public async Task Fail_to_obtain_requests_if_user_is_not_authenticated()
         {
-            int cantidadSolicitada = 100;
+            int requestedQuantity = 100;
 
             var response = await Given
                 .Server
-                .CreateRequest(endpoint.Get(cantidadSolicitada))
+                .CreateRequest(endpoint.Get(requestedQuantity))
                 .GetAsync();
 
             await response.ShouldBe(StatusCodes.Status401Unauthorized);

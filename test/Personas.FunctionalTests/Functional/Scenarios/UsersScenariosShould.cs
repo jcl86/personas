@@ -37,12 +37,23 @@ namespace Personas.FunctionalTests
         }
 
         [Fact]
-        public async Task Fail_to_obtain_all_users_because_is_not_authorized()
+        public async Task Fail_to_obtain_all_users_because_is_not_admin()
         {
             var response = await Given
               .Server
               .CreateRequest(UsersEndpoint.GetAll)
               .WithIdentity(Identities.OneUser)
+              .GetAsync();
+
+            await response.ShouldBe(StatusCodes.Status403Forbidden);
+        }
+
+        [Fact]
+        public async Task Fail_to_obtain_all_users_because_is_not_authorized()
+        {
+            var response = await Given
+              .Server
+              .CreateRequest(UsersEndpoint.GetAll)
               .GetAsync();
 
             await response.ShouldBe(StatusCodes.Status401Unauthorized);
@@ -93,10 +104,21 @@ namespace Personas.FunctionalTests
             var response = await Given
               .Server
               .CreateRequest(UsersEndpoint.GetById(Guid.NewGuid()))
-              .WithIdentity(Identities.OneUser)
               .GetAsync();
 
             await response.ShouldBe(StatusCodes.Status401Unauthorized);
+        }
+
+        [Fact]
+        public async Task Fail_to_obtain_one_user_because_is_not_admin()
+        {
+            var response = await Given
+              .Server
+              .CreateRequest(UsersEndpoint.GetById(Guid.NewGuid()))
+              .WithIdentity(Identities.OneUser)
+              .GetAsync();
+
+            await response.ShouldBe(StatusCodes.Status403Forbidden);
         }
 
         [Fact]
@@ -144,12 +166,23 @@ namespace Personas.FunctionalTests
         }
 
         [Fact]
-        public async Task Fail_to_delete_one_user_because_is_not_authorized()
+        public async Task Fail_to_delete_one_user_because_is_not_admin()
         {
             var response = await Given
               .Server
               .CreateRequest(UsersEndpoint.Delete(Guid.NewGuid()))
               .WithIdentity(Identities.OneUser)
+              .GetAsync();
+
+            await response.ShouldBe(StatusCodes.Status403Forbidden);
+        }
+
+        [Fact]
+        public async Task Fail_to_delete_one_user_because_is_not_authorized()
+        {
+            var response = await Given
+              .Server
+              .CreateRequest(UsersEndpoint.Delete(Guid.NewGuid()))
               .GetAsync();
 
             await response.ShouldBe(StatusCodes.Status401Unauthorized);

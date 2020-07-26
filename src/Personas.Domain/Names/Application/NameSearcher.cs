@@ -17,7 +17,7 @@ namespace Personas.Domain
 
         public async Task<IEnumerable<Name>> Search(int quantity, Gender gender)
         {
-            quantity.EnsureQuantityIsEqualOrHigerThan100();
+            quantity.EnsureQuantityIsInValidRange();
 
             var nameList = await repository.GetNamesCompleteList(gender);
 

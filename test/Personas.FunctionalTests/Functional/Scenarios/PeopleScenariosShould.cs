@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Personas.Domain;
 using Personas.Shared;
@@ -30,13 +31,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
         }
 
@@ -48,13 +47,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
         }
 
@@ -66,9 +63,10 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetWomen(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
 
             var json = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
@@ -85,13 +83,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetMen(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Male.ToString()));
         }
@@ -104,13 +100,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromProvince(Province.Tarragona.ToString(), requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Place.Province.Should().Be("Tarragona"));
         }
@@ -123,13 +117,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetWomenFromProvince(Province.Gipuzkoa.ToString(), requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Female.ToString()));
             result.Select(x => x.Place.Province.Should().Be("Gipuzkoa"));
@@ -144,13 +136,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetMen(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Male.ToString()));
             result.Select(x => x.Place.Province.Should().Be("La Rioja"));
@@ -164,13 +154,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromRegion(AutonomousCommunity.Aragon.ToString(), requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Place.Region.Name.Should().Be("Aragón"));
         }
@@ -183,13 +171,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetWomenFromRegion(AutonomousCommunity.Castillalamancha.ToString(), requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Female.ToString()));
             result.Select(x => x.Place.Province.Should().Be("Castilla - La Mancha"));
@@ -203,13 +189,11 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetMenFromRegion(AutonomousCommunity.Galicia.ToString(), requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
-            var xxx = await response.Content.ReadAsStringAsync();
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PersonViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PersonViewModel>>();
             result.Count().Should().Be(requestedQuantity);
             result.Select(x => x.Gender.Should().Be(Gender.Male.ToString()));
             result.Select(x => x.Place.Region.Name.Should().Be("Galicia"));
@@ -217,40 +201,50 @@ namespace Personas.FunctionalTests
 
 
         [Fact]
-        public async Task Should_not_find_province()
+        public async Task Not_find_province()
         {
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromProvince(AutonomousCommunity.Galicia.ToString(), 100))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
-
-            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            await response.ShouldBe(StatusCodes.Status400BadRequest);
 
             response = await Given
-            .Server
-            .CreateRequest(endpoint.GetFromProvince("wrongProvince", 100))
-            .GetAsync();
-
-            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+                .Server
+                .CreateRequest(endpoint.GetFromProvince("wrongProvince", 100))
+                .WithIdentity(Identities.OneUser)
+                .GetAsync();
+            await response.ShouldBe(StatusCodes.Status400BadRequest);
         }
 
 
         [Fact]
-        public async Task Should_not_find_region()
+        public async Task Not_find_region()
         {
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromRegion(Province.Lugo.ToString(), 100))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
-
-            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            await response.ShouldBe(StatusCodes.Status400BadRequest);
 
             response = await Given
-            .Server
-            .CreateRequest(endpoint.GetFromRegion("wrongRegion", 100))
-            .GetAsync();
+                .Server
+                .CreateRequest(endpoint.GetFromRegion("wrongRegion", 100))
+                .WithIdentity(Identities.OneUser)
+                .GetAsync();
+            await response.ShouldBe(StatusCodes.Status400BadRequest);
+        }
 
-            response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+        [Fact]
+        public async Task Fail_to_obtain_people_when_user_is_not_authenticated()
+        {
+            var response = await Given
+                .Server
+                .CreateRequest(endpoint.Get(100))
+                .GetAsync();
+            await response.ShouldBe(StatusCodes.Status401Unauthorized);
         }
     }
 }

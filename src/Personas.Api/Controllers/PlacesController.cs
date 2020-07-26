@@ -20,14 +20,14 @@ namespace Personas.Api
             this.placeSearcher = placeSearcher;
         }
 
-        [HttpGet, Route("{numero:int}")]
+        [HttpGet, Route("{quantity:int}")]
         public async Task<IActionResult> Get(int quantity = 100)
         {
             var lugares = await placeSearcher.Search(quantity);
             return Ok(Map(lugares));
         }
 
-        [HttpGet, Route("province({provincia})/{quantity:int}")]
+        [HttpGet, Route("province({province})/{quantity:int}")]
         public async Task<IActionResult> GetFromProvincia(string province, int quantity = 100)
         {
             var convertedProvince = new EnumConverter<Province>(province).Convert();

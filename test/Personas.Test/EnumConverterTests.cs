@@ -91,7 +91,7 @@ namespace Personas.Test
         }
 
         [Theory]
-        [InlineData("AutonomousCommunity valenciana", AutonomousCommunity.Valencia)]
+        [InlineData("Comunidad valenciana", AutonomousCommunity.Valencia)]
         [InlineData("Galicia", AutonomousCommunity.Galicia)]
         [InlineData("País Vasco", AutonomousCommunity.Euskadi)]
         [InlineData("Euskadi", AutonomousCommunity.Euskadi)]

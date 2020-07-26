@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using Personas.Domain;
 using Personas.Shared;
@@ -30,13 +31,12 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.Get(requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PlaceViewModel>>(json);
-
+            var result = await response.ReadJsonResponse<IEnumerable<PlaceViewModel>>();
             result.Count().Should().Be(requestedQuantity);
         }
 
@@ -48,14 +48,13 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromProvincia("murcia", requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PlaceViewModel>>(json);
-
-            result.Count().Should().BeInRange(requestedQuantity - 10, requestedQuantity + 10);
+            var result = await response.ReadJsonResponse<IEnumerable<PlaceViewModel>>();
+            result.Count().Should().BeCloseTo(requestedQuantity, 5);
             result.All(x => x.Province.Equals("Murcia")).Should().BeTrue();
         }
 
@@ -67,14 +66,13 @@ namespace Personas.FunctionalTests
             var response = await Given
                 .Server
                 .CreateRequest(endpoint.GetFromRegion("castillaLaMancha", requestedQuantity))
+                .WithIdentity(Identities.OneUser)
                 .GetAsync();
 
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            await response.ShouldBe(StatusCodes.Status200OK);
 
-            var json = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<IEnumerable<PlaceViewModel>>(json);
-
-            result.Count().Should().BeInRange(requestedQuantity - 20, requestedQuantity + 20);
+            var result = await response.ReadJsonResponse<IEnumerable<PlaceViewModel>>();
+            result.Count().Should().BeCloseTo(requestedQuantity, 10);
             result.All(x => x.Region.Name.Equals("Castilla - La Mancha")).Should().BeTrue();
         }
     }

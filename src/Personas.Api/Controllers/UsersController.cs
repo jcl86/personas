@@ -17,31 +17,33 @@ namespace Personas.Api
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly IUserRepository usersRepository;
+        private readonly UserFinder userFinder;
+        private readonly UserEraser userEraser;
 
-        public UsersController(IUserRepository usersRepository)
+        public UsersController(UserFinder userFinder, UserEraser userEraser)
         {
-            this.usersRepository = usersRepository;
+            this.userFinder = userFinder;
+            this.userEraser = userEraser;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserViewModel>>> GetAll()
         {
-            var users = await usersRepository.GetAll();
+            var users = await userFinder.FindAll();
             return Ok(users.Select(x => Map(x)).ToList());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserViewModel>> GetById(Guid id)
         {
-            var entity = await usersRepository.GetUser(id);
+            var entity = await userFinder.Find(id);
             return Ok(Map(entity));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await usersRepository.DeleteUser(id);
+            await userEraser.Delete(id);
             return NoContent();
         }
 
@@ -53,5 +55,6 @@ namespace Personas.Api
                 Username = user.ToString()
             };
         }
+
     }
 }

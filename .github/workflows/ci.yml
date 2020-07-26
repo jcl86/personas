@@ -36,9 +36,9 @@ jobs:
       with:
         files: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/app/appsettings.json'
       env:
-        ApiKey: "${{ secrets.API_KEY }}"
-        MailConfiguration.SendGridCredentials.ApiKey : "${{ secrets.SENDGRID_API_KEY }}"
-        MailConfiguration.Suscribers : "${{ secrets.SENDGRID_API_KEY }}"
+        SecretKey: "${{ secrets.SECRET_KEY }}"
+        MailConfiguration.SendGridCredentials.ApiKey : "${{ secrets.SENDGRID_KEY }}"
+        MailConfiguration.Suscribers : "${{ secrets.SUSCRIBER }}"
         UsersConfiguration.DefaultAdministrator.Username : "${{ secrets.DEFAULT_ADMIN_USERNAME }}"
         UsersConfiguration.DefaultAdministrator.Password : "${{ secrets.DEFAULT_ADMIN_PASSWORD }}"
 

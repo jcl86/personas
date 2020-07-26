@@ -19,7 +19,7 @@ namespace Personas.Application
 
         public async Task<IEnumerable<Surname>> Search(int quantity)
         {
-            quantity.EnsureQuantityIsEqualOrHigerThan100();
+            quantity.EnsureQuantityIsInValidRange();
 
             var surnameList = await repository.GetSurnamesCompleteList();
 
