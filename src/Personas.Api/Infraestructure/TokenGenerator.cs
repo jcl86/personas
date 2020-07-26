@@ -12,8 +12,8 @@ namespace Personas.Api
 {
     public class TokenGenerator : ITokenGenerator
     {
-        public const string ApiKeyConfigurationName = "ApiKey";
-        public const int ExpirationDays = 7;
+        public const string ApiKeyConfigurationName = "SecretKey";
+        public const int ExpirationDays = 1;
 
         private readonly IConfiguration configuration;
 
