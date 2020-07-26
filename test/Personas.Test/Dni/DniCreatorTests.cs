@@ -1,4 +1,4 @@
-using Personas.Core;
+using Personas.Domain;
 using Xunit;
 
 namespace Personas.Test
@@ -8,7 +8,7 @@ namespace Personas.Test
         [Fact]
         public void Should_create_a_valid_DNI()
         {
-            var dni = new Dni(new OnlyOneProvider());
+            var dni = new IdCard(new OnlyOneProvider());
 
             var numberLength = dni.Number.ToString().Length;
 
@@ -19,7 +19,7 @@ namespace Personas.Test
         [Fact]
         public void Should_create_a_concrete_DNI()
         {
-            var dni = new Dni(new IncrementalProvider());
+            var dni = new IdCard(new IncrementalProvider());
 
             var numberLength = dni.Number.ToString().Length;
 
@@ -31,7 +31,7 @@ namespace Personas.Test
         [Fact]
         public void Should_create_a_random_valid_DNI()
         {
-            var dni = new Dni(new RandomProvider(new System.Random()));
+            var dni = new IdCard(new RandomProvider(new System.Random()));
 
             Assert.NotNull(dni.ToString());
         }

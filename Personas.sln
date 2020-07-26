@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Core", "src\Personas.Core\Personas.Core.csproj", "{92071A0E-76F7-464A-B26B-93F325D406B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Domain", "src\Personas.Domain\Personas.Domain.csproj", "{92071A0E-76F7-464A-B26B-93F325D406B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Test", "test\Personas.Test\Personas.Test.csproj", "{DFFE8574-EED2-4C6F-8519-046E731912A5}"
 EndProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Api", "src\Persona
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.Host", "src\Personas.Host\Personas.Host.csproj", "{BEAD2509-6648-4E72-9244-634E4C1045D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personas.FunctionalTests", "test\Personas.FunctionalTests\Personas.FunctionalTests.csproj", "{C8965625-1000-4D2D-B105-A90268FB9C4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personas.FunctionalTests", "test\Personas.FunctionalTests\Personas.FunctionalTests.csproj", "{C8965625-1000-4D2D-B105-A90268FB9C4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Personas.Shared", "src\Personas.Shared\Personas.Shared.csproj", "{C01A5BB6-275F-4A82-B32F-1B5D669B3F48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8965625-1000-4D2D-B105-A90268FB9C4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C01A5BB6-275F-4A82-B32F-1B5D669B3F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C01A5BB6-275F-4A82-B32F-1B5D669B3F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C01A5BB6-275F-4A82-B32F-1B5D669B3F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C01A5BB6-275F-4A82-B32F-1B5D669B3F48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
