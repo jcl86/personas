@@ -12,11 +12,9 @@ namespace Personas.Host
 {
     public static class AuthenticationExtensions
     {
-        public const string ApiKeyConfigurationName = "ApiKey";
-
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-            string apiKeyValue = configuration.GetValue<string>(key: ApiKeyConfigurationName);
+            string apiKeyValue = configuration.GetValue<string>(key: Api.TokenGenerator.ApiKeyConfigurationName);
 
             var key = Encoding.ASCII.GetBytes(apiKeyValue);
             services.AddAuthentication(x =>
