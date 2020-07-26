@@ -26,7 +26,7 @@ namespace Personas.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = Data.Roles.Administrator, NormalizedName = Data.Roles.Administrator.ToUpper() });
+        //    modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = Data.Roles.Administrator, NormalizedName = Data.Roles.Administrator.ToUpper() });
         }
     }
 }

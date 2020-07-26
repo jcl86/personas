@@ -8,11 +8,13 @@ namespace Personas.Data
     public class ApplicationInitializer
     {
         private readonly UserManager<User> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly DefaultAdministrator defaultAdministrator;
 
-        public ApplicationInitializer(UserManager<Data.User> userManager, DefaultAdministrator defaultAdministrator)
+        public ApplicationInitializer(UserManager<Data.User> userManager, RoleManager<IdentityRole> roleManager, DefaultAdministrator defaultAdministrator)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.defaultAdministrator = defaultAdministrator;
         }
 
@@ -25,6 +27,8 @@ namespace Personas.Data
 
             if ((await userManager.FindByEmailAsync(defaultAdministrator.Username)) is null)
             {
+                await roleManager.CreateAsync(new IdentityRole { Name = Data.Roles.Administrator, NormalizedName = Data.Roles.Administrator.ToUpper() });
+
                 var user = new User
                 {
                     UserName = defaultAdministrator.Username,
@@ -35,7 +39,7 @@ namespace Personas.Data
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user, Data.Roles.Administrator).Wait();
+                    userManager.AddToRoleAsync(user, Roles.Administrator).Wait();
                 }
             }
         }
