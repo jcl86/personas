@@ -17,7 +17,7 @@ namespace Personas.Domain
 
         public async Task Notify(string type, string text)
         {
-            foreach (var email in mailConfiguration.Suscribers.Where(x => !x.IsEmpty()))
+            foreach (var email in mailConfiguration.Suscribers.Split(';').Where(x => !x.IsEmpty()))
             {
                 await emailSender.SendPlainBody(new UserName(email), type, text);
             }
