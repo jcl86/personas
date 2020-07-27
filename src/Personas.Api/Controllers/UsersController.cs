@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Personas.Api
 {
-    [Authorize(Policies.Administrator)]
+    [Authorize(Policies.IsAdminPolicy)]
     [ApiController]
     [Route("api/users")]
     public class UsersController : ControllerBase
@@ -52,7 +52,8 @@ namespace Personas.Api
             return new UserViewModel()
             {
                 Id = user.Id,
-                Username = user.ToString()
+                Username = user.ToString(),
+                Roles = user.Roles
             };
         }
 

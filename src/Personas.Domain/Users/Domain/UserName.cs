@@ -6,6 +6,7 @@ namespace Personas.Domain
     public class UserName
     {
         private readonly string email;
+        public string NormalizedEmail => email.Trim().ToUpper();
 
         public UserName(string email)
         {

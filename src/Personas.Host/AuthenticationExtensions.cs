@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,37 +19,34 @@ namespace Personas.Host
             string apiKeyValue = configuration.GetValue<string>(key: Api.TokenGenerator.ApiKeyConfigurationName);
 
             var key = Encoding.ASCII.GetBytes(apiKeyValue);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.Events = new JwtBearerEvents
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    OnTokenValidated = context =>
+                    options.Events = new JwtBearerEvents
                     {
-                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-                        var userId = Guid.Parse(context.Principal.Identity.Name);
-                        var user = userRepository.GetUser(userId);
-                        if (user == null)
+                        OnTokenValidated = async context =>
                         {
-                            context.Fail("Unauthorized");
+                            var userRepository = context.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
+                            var userId = Guid.Parse(context.Principal.Identity.Name);
+                            var user = await userRepository.GetUser(userId);
+
+                            if (user == null)
+                            {
+                                context.Fail("Unauthorized");
+                            }
+                          //  context.Principal.AddIdentity(new ClaimsIdentity(user.Roles.Select(x => new Claim(ClaimsIdentity.DefaultRoleClaimType, x))));
                         }
-                        return Task.CompletedTask;
-                    }
-                };
-                options.RequireHttpsMetadata = environment.EnvironmentName == "Development";
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+                    };
+                    options.RequireHttpsMetadata = environment.EnvironmentName == "Development";
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
             return services;
         }
     }

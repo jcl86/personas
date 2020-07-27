@@ -5,6 +5,7 @@ using Personas.Domain;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -27,13 +28,17 @@ namespace Personas.Api
             string secret = configuration.GetValue<string>(ApiKeyConfigurationName);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secret);
+
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, user.Id.ToString()),
+                new Claim(ClaimTypes.GivenName, user.ToString()),
+            };
+            claims.AddRange(user.Roles.Select(x => new Claim(ClaimsIdentity.DefaultRoleClaimType, x)));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.GivenName, user.ToString())
-                }),
+                Subject = new ClaimsIdentity(claims) ,
                 Expires = DateTime.UtcNow.AddDays(ExpirationDays),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

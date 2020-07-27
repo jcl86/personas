@@ -30,6 +30,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IDateProvider, DateProvider>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IUserCommands, UserCommands>();
             services.AddScoped<ApplicationInitializer>();
             services.AddScoped<SuscribersNotifier>();
             services.AddScoped<PeopleSearcher>();

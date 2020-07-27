@@ -10,7 +10,7 @@ namespace Personas.Api
 {
     [Authorize]
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("api/places")]
     public class PlacesController : ControllerBase
     {
         private readonly PlaceSearcher placeSearcher;

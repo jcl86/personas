@@ -11,7 +11,7 @@ namespace Personas.Api
 {
     [Authorize]
     [ApiController]
-    [Route("api/[Controller]")]
+    [Route("api/surnames")]
     public class SurnamesController : ControllerBase
     {
         private readonly SurnameSearcher surnameSearcher;

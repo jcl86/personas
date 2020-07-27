@@ -8,39 +8,13 @@ using System.Threading.Tasks;
 
 namespace Personas.Api
 {
-    public class UserRepository : IUserRepository
+    public class UserCommands : IUserCommands
     {
         private readonly UserManager<Data.User> userManager;
 
-        public UserRepository(UserManager<Data.User> userManager)
+        public UserCommands(UserManager<Data.User> userManager)
         {
             this.userManager = userManager;
-        }
-
-        public async Task<IEnumerable<User>> GetAll()
-        {
-            var users = await userManager.Users.ToListAsync();
-            return users.Select(x => Map(x)).ToList();
-        }
-
-        public async Task<User> GetUser(Guid idUser)
-        {
-            var user = await userManager.FindByIdAsync(idUser.ToString());
-            if (user is null)
-            {
-                return null;
-            }
-            return Map(user);
-        }
-
-        public async Task<User> GetUser(UserName email)
-        {
-            var user = await userManager.FindByEmailAsync(email.ToString());
-            if (user is null)
-            {
-                return null;
-            }
-            return Map(user);
         }
 
         public async Task Create(UserName email, string password)
@@ -71,7 +45,7 @@ namespace Personas.Api
             var user = await userManager.FindByIdAsync(idUser.ToString());
             await userManager.DeleteAsync(user);
         }
-
-        private User Map(Data.User user) => new User(user.Id, user.UserName);
     }
+
+  
 }

@@ -5,10 +5,12 @@ namespace Personas.Domain
 {
     public class PasswordChanger
     {
+        private readonly IUserCommands userCommands;
         private readonly IUserRepository userRepository;
 
-        public PasswordChanger(IUserRepository userRepository)
+        public PasswordChanger(IUserCommands userCommands, IUserRepository userRepository)
         {
+            this.userCommands = userCommands;
             this.userRepository = userRepository;
         }
 
@@ -32,7 +34,7 @@ namespace Personas.Domain
                 throw new DomainException("Password can not be empty");
             }
 
-            await userRepository.UpdatePassword(user, currentPassword, newPassword);
+            await userCommands.UpdatePassword(user, currentPassword, newPassword);
 
         }
     }

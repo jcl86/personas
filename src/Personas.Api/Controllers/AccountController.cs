@@ -49,7 +49,8 @@ namespace Personas.Api
             return Ok(new UserViewModel()
             {
                 Id = user.Id,
-                Username = user.ToString()
+                Username = user.ToString(),
+                Roles = user.Roles
             });
         }
 
