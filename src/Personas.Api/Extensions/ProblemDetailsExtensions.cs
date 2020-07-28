@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services
                 .AddProblemDetails(configure =>
                 {
-                    configure.IncludeExceptionDetails = (ctx, exception) => environment.EnvironmentName == "Development";
+                  //  configure.IncludeExceptionDetails = (ctx, exception) => environment.EnvironmentName == "Development";
                     configure.Map<UnauthorizedAccessException>(exception => new ProblemDetails()
                     {
                         Title = exception.Message,
